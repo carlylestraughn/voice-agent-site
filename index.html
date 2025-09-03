@@ -7,6 +7,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="bg-gray-50 text-gray-800">
+    <!-- Header -->
     <header class="bg-white shadow">
       <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
         <h1 class="text-2xl font-bold">Voice Agent Solutions</h1>
@@ -19,6 +20,7 @@
       </div>
     </header>
 
+    <!-- Hero -->
     <section class="bg-blue-100 py-20 text-center">
       <h2 class="text-4xl font-bold mb-4">Automate Customer Calls with Voice AI</h2>
       <p class="text-lg max-w-xl mx-auto">
@@ -26,6 +28,7 @@
       </p>
     </section>
 
+    <!-- Services -->
     <section id="services" class="py-16 max-w-6xl mx-auto px-4">
       <h3 class="text-3xl font-bold mb-8 text-center">Industries We Serve</h3>
       <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
@@ -44,6 +47,7 @@
       </div>
     </section>
 
+    <!-- About -->
     <section id="about" class="bg-white py-16 px-4 max-w-4xl mx-auto text-center">
       <h3 class="text-3xl font-bold mb-4">Why Choose Us?</h3>
       <p class="text-lg">
@@ -51,53 +55,84 @@
       </p>
     </section>
 
-    <!-- Demo Models Section -->
+    <!-- Demo Models -->
     <section id="demo" class="py-16 bg-gray-100 px-4 max-w-6xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6 text-center">Demo Models</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+      <h3 class="text-3xl font-bold mb-8 text-center">Demo Models</h3>
 
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h4 class="text-xl font-semibold mb-4">🚗 Speedy Auto & Oil</h4>
-          <vapi-widget assistant-id="a7517e87-c948-4b86-a61e-1e796c761ba7" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Speedy Auto & Oil -->
+        <div class="bg-white shadow rounded-lg p-6">
+          <h4 class="text-xl font-semibold mb-3">🚗 Speedy Auto & Oil</h4>
+          <vapi-widget
+            data-mode="inline"
+            assistant-id="a7517e87-c948-4b86-a61e-1e796c761ba7"
+            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
+            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
+          ></vapi-widget>
         </div>
 
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h4 class="text-xl font-semibold mb-4">🏡 Clara Homes</h4>
-          <vapi-widget assistant-id="77258f53-3a2e-4229-a4ad-5d913608d0d3" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        <!-- Clara Homes -->
+        <div class="bg-white shadow rounded-lg p-6">
+          <h4 class="text-xl font-semibold mb-3">🏡 Clara Homes</h4>
+          <vapi-widget
+            data-mode="inline"
+            assistant-id="77258f53-3a2e-4229-a4ad-5d913608d0d3"
+            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
+            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
+          ></vapi-widget>
         </div>
 
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h4 class="text-xl font-semibold mb-4">⚖️ Crane, Poole & Schmidt</h4>
-          <vapi-widget assistant-id="0818064d-a482-4050-9cf8-1c81ec8834b4" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        <!-- Crane, Poole & Schmidt -->
+        <div class="bg-white shadow rounded-lg p-6">
+          <h4 class="text-xl font-semibold mb-3">⚖️ Crane, Poole & Schmidt</h4>
+          <vapi-widget
+            data-mode="inline"
+            assistant-id="0818064d-a482-4050-9cf8-1c81ec8834b4"
+            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
+            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
+          ></vapi-widget>
         </div>
 
-        <div class="bg-white shadow p-6 rounded-lg">
-          <h4 class="text-xl font-semibold mb-4">🦷 Smile Studio Dental</h4>
-          <vapi-widget assistant-id="89b441e6-56eb-46f4-96df-a6467273641c" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        <!-- Smile Studio Dental -->
+        <div class="bg-white shadow rounded-lg p-6">
+          <h4 class="text-xl font-semibold mb-3">🦷 Smile Studio Dental</h4>
+          <vapi-widget
+            data-mode="inline"
+            assistant-id="89b441e6-56eb-46f4-96df-a6467273641c"
+            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
+            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
+          ></vapi-widget>
         </div>
 
-        <div class="bg-white shadow p-6 rounded-lg md:col-span-2">
-          <h4 class="text-xl font-semibold mb-4">🏥 Newport Coast Urgent Care</h4>
-          <vapi-widget assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        <!-- Newport Coast Urgent Care -->
+        <div class="bg-white shadow rounded-lg p-6 md:col-span-2">
+          <h4 class="text-xl font-semibold mb-3">🏥 Newport Coast Urgent Care</h4>
+          <vapi-widget
+            data-mode="inline"
+            assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140"
+            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
+            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
+          ></vapi-widget>
         </div>
-
       </div>
-
-      <!-- Vapi Script (only needs to be included once) -->
-      <script
-        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
-        async
-        type="text/javascript"
-      ></script>
     </section>
 
+    <!-- Contact -->
     <section id="contact" class="py-16 text-center">
       <h3 class="text-2xl font-bold mb-2">Let’s Build Your Assistant</h3>
       <p>Email us at <a href="mailto:carlyle.straughn@gmail.com" class="text-blue-600 underline">carlyle.straughn@gmail.com</a></p>
     </section>
 
+    <!-- Footer -->
     <footer class="bg-white py-4 text-center text-sm text-gray-500">
       &copy; 2025 Voice Agent Solutions. All rights reserved.
     </footer>
+
+    <!-- Load the Vapi SDK once -->
+    <script
+      src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+      async
+      type="text/javascript"
+    ></script>
   </body>
 </html>
