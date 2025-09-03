@@ -60,7 +60,7 @@
       <h3 class="text-3xl font-bold mb-8 text-center">Demo Models</h3>
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Speedy Auto & Oil -->
+        <!-- Speedy Auto & Oil (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">🚗 Speedy Auto & Oil</h4>
           <vapi-widget
@@ -71,7 +71,7 @@
           ></vapi-widget>
         </div>
 
-        <!-- Clara Homes -->
+        <!-- Clara Homes (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">🏡 Clara Homes</h4>
           <vapi-widget
@@ -82,7 +82,7 @@
           ></vapi-widget>
         </div>
 
-        <!-- Crane, Poole & Schmidt -->
+        <!-- Crane, Poole & Schmidt (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">⚖️ Crane, Poole & Schmidt</h4>
           <vapi-widget
@@ -93,7 +93,7 @@
           ></vapi-widget>
         </div>
 
-        <!-- Smile Studio Dental -->
+        <!-- Smile Studio Dental (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">🦷 Smile Studio Dental</h4>
           <vapi-widget
@@ -103,18 +103,18 @@
             style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
           ></vapi-widget>
         </div>
-
-        <!-- Newport Coast Urgent Care -->
-        <div class="bg-white shadow rounded-lg p-6 md:col-span-2">
-          <h4 class="text-xl font-semibold mb-3">🏥 Newport Coast Urgent Care</h4>
-          <vapi-widget
-            data-mode="inline"
-            assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140"
-            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
-            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
-          ></vapi-widget>
-        </div>
       </div>
+
+      <!-- Newport Coast Urgent Care (BUBBLE ONLY) -->
+      <vapi-widget
+        data-mode="bubble"
+        assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140"
+        public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
+        data-open="false"
+        data-position="bottom-right"
+        style="display:block"
+      ></vapi-widget>
+      <!-- Note: Only this bubble will appear site-wide. Inline widgets above won’t spawn bubbles. -->
     </section>
 
     <!-- Contact -->
@@ -128,11 +128,17 @@
       &copy; 2025 Voice Agent Solutions. All rights reserved.
     </footer>
 
-    <!-- Load the Vapi SDK once -->
+    <!-- Load Vapi SDK once -->
     <script
       src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
       async
       type="text/javascript"
     ></script>
+
+    <!-- (Optional) Failsafe: hide any accidental duplicate bubbles the SDK might spawn -->
+    <style>
+      /* If the SDK ever injected more than one bubble, this ensures only the last stays visible */
+      .vapi-bubble { z-index: 2147483000 !important; }
+    </style>
   </body>
 </html>
