@@ -63,58 +63,21 @@
         <!-- Speedy Auto & Oil (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">🚗 Speedy Auto & Oil</h4>
-          <vapi-widget
-            data-mode="inline"
-            assistant-id="a7517e87-c948-4b86-a61e-1e796c761ba7"
-            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
-            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
-          ></vapi-widget>
+          <div id="speedy-inline" class="w-full min-h-[420px] border border-gray-200 rounded-xl overflow-hidden"></div>
         </div>
 
         <!-- Clara Homes (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">🏡 Clara Homes</h4>
-          <vapi-widget
-            data-mode="inline"
-            assistant-id="77258f53-3a2e-4229-a4ad-5d913608d0d3"
-            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
-            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
-          ></vapi-widget>
+          <div id="clara-inline" class="w-full min-h-[420px] border border-gray-200 rounded-xl overflow-hidden"></div>
         </div>
 
         <!-- Crane, Poole & Schmidt (inline) -->
         <div class="bg-white shadow rounded-lg p-6">
           <h4 class="text-xl font-semibold mb-3">⚖️ Crane, Poole & Schmidt</h4>
-          <vapi-widget
-            data-mode="inline"
-            assistant-id="0818064d-a482-4050-9cf8-1c81ec8834b4"
-            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
-            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
-          ></vapi-widget>
-        </div>
-
-        <!-- Smile Studio Dental (inline) -->
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-3">🦷 Smile Studio Dental</h4>
-          <vapi-widget
-            data-mode="inline"
-            assistant-id="89b441e6-56eb-46f4-96df-a6467273641c"
-            public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
-            style="display:block;width:100%;min-height:420px;border:1px solid #e5e7eb;border-radius:12px;"
-          ></vapi-widget>
+          <div id="crane-inline" class="w-full min-h-[420px] border border-gray-200 rounded-xl overflow-hidden"></div>
         </div>
       </div>
-
-      <!-- Newport Coast Urgent Care (BUBBLE ONLY) -->
-      <vapi-widget
-        data-mode="bubble"
-        assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140"
-        public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"
-        data-open="false"
-        data-position="bottom-right"
-        style="display:block"
-      ></vapi-widget>
-      <!-- Note: Only this bubble will appear site-wide. Inline widgets above won’t spawn bubbles. -->
     </section>
 
     <!-- Contact -->
@@ -123,21 +86,72 @@
       <p>Email us at <a href="mailto:carlyle.straughn@gmail.com" class="text-blue-600 underline">carlyle.straughn@gmail.com</a></p>
     </section>
 
-    <!-- Footer -->
     <footer class="bg-white py-4 text-center text-sm text-gray-500">
       &copy; 2025 Voice Agent Solutions. All rights reserved.
     </footer>
 
-    <!-- Load Vapi SDK once -->
+    <!-- Load SDK ONCE -->
     <script
       src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
       async
       type="text/javascript"
     ></script>
 
-    <!-- (Optional) Failsafe: hide any accidental duplicate bubbles the SDK might spawn -->
+    <script>
+      // Helper: wait until the custom element is defined so we can safely create instances.
+      function whenVapiReady() {
+        return new Promise((resolve) => {
+          const check = () => {
+            if (window.customElements && customElements.get('vapi-widget')) return resolve();
+            setTimeout(check, 50);
+          };
+          check();
+        });
+      }
+
+      function mountInlineWidget(containerSelector, assistantId, publicKey) {
+        const host = document.querySelector(containerSelector);
+        if (!host) return;
+
+        const el = document.createElement('vapi-widget');
+        el.setAttribute('assistant-id', assistantId);
+        el.setAttribute('public-key', publicKey);
+        el.setAttribute('data-mode', 'inline');
+        // styling for inline frame
+        el.style.display = 'block';
+        el.style.width = '100%';
+        el.style.minHeight = '420px';
+        el.style.border = '0';
+        host.appendChild(el);
+      }
+
+      function mountBubble(assistantId, publicKey) {
+        // Only one bubble on the whole site
+        const el = document.createElement('vapi-widget');
+        el.setAttribute('assistant-id', assistantId);
+        el.setAttribute('public-key', publicKey);
+        el.setAttribute('data-mode', 'bubble');
+        el.setAttribute('data-open', 'false');
+        el.setAttribute('data-position', 'bottom-right');
+        document.body.appendChild(el);
+      }
+
+      (async () => {
+        await whenVapiReady();
+
+        // Inline demos
+        const PK = 'dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83';
+        mountInlineWidget('#speedy-inline', 'a7517e87-c948-4b86-a61e-1e796c761ba7', PK);
+        mountInlineWidget('#clara-inline',  '77258f53-3a2e-4229-a4ad-5d913608d0d3', PK);
+        mountInlineWidget('#crane-inline',  '0818064d-a482-4050-9cf8-1c81ec8834b4', PK);
+
+        // Single global bubble: Newport Coast Urgent Care
+        mountBubble('20840a5a-9838-42a0-bc3e-7d7647cec140', PK);
+      })();
+    </script>
+
+    <!-- Failsafe to keep the bubble on top -->
     <style>
-      /* If the SDK ever injected more than one bubble, this ensures only the last stays visible */
       .vapi-bubble { z-index: 2147483000 !important; }
     </style>
   </body>
