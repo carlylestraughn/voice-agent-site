@@ -51,22 +51,44 @@
       </p>
     </section>
 
+    <!-- Demo Models Section -->
     <section id="demo" class="py-16 bg-gray-100 px-4 max-w-6xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6 text-center">Watch a Demo</h3>
-      <div class="flex flex-col md:flex-row gap-6 justify-center">
-        <div class="w-full md:w-1/2">
-          <iframe class="w-full aspect-video rounded shadow" src="https://www.youtube.com/embed/dQw4w9WgXcQ" title="Demo Video" allowfullscreen></iframe>
+      <h3 class="text-3xl font-bold mb-6 text-center">Demo Models</h3>
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+
+        <div class="bg-white shadow p-6 rounded-lg">
+          <h4 class="text-xl font-semibold mb-4">🚗 Speedy Auto & Oil</h4>
+          <vapi-widget assistant-id="a7517e87-c948-4b86-a61e-1e796c761ba7" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
         </div>
-        <div class="w-full md:w-1/2">
-          <h4 class="text-xl font-semibold mb-2">Interested in a Custom Assistant?</h4>
-          <form class="bg-white p-6 rounded-lg shadow space-y-4">
-            <input type="text" placeholder="Your Name" class="w-full border p-2 rounded" required />
-            <input type="email" placeholder="Your Email" class="w-full border p-2 rounded" required />
-            <textarea placeholder="Tell us what you need..." class="w-full border p-2 rounded" rows="4"></textarea>
-            <button type="submit" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Submit Inquiry</button>
-          </form>
+
+        <div class="bg-white shadow p-6 rounded-lg">
+          <h4 class="text-xl font-semibold mb-4">🏡 Clara Homes</h4>
+          <vapi-widget assistant-id="77258f53-3a2e-4229-a4ad-5d913608d0d3" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
         </div>
+
+        <div class="bg-white shadow p-6 rounded-lg">
+          <h4 class="text-xl font-semibold mb-4">⚖️ Crane, Poole & Schmidt</h4>
+          <vapi-widget assistant-id="0818064d-a482-4050-9cf8-1c81ec8834b4" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        </div>
+
+        <div class="bg-white shadow p-6 rounded-lg">
+          <h4 class="text-xl font-semibold mb-4">🦷 Smile Studio Dental</h4>
+          <vapi-widget assistant-id="89b441e6-56eb-46f4-96df-a6467273641c" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        </div>
+
+        <div class="bg-white shadow p-6 rounded-lg md:col-span-2">
+          <h4 class="text-xl font-semibold mb-4">🏥 Newport Coast Urgent Care</h4>
+          <vapi-widget assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        </div>
+
       </div>
+
+      <!-- Vapi Script (only needs to be included once) -->
+      <script
+        src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
+        async
+        type="text/javascript"
+      ></script>
     </section>
 
     <section id="contact" class="py-16 text-center">
