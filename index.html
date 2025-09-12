@@ -2,157 +2,267 @@
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Voice Agent Solutions</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            colors: {
+              brand: {
+                50: '#eef8ff',
+                100: '#d9efff',
+                200: '#badeff',
+                300: '#8ec8ff',
+                400: '#5ca9ff',
+                500: '#2a84ff',
+                600: '#1767db',
+                700: '#124fb0',
+                800: '#12438f',
+                900: '#132e61',
+              }
+            }
+          }
+        }
+      }
+    </script>
+    <style>
+      .fade-up{opacity:0;transform:translateY(12px);transition:all .6s ease}
+      .show{opacity:1;transform:none}
+    </style>
   </head>
   <body class="bg-gray-50 text-gray-800">
     <!-- Header -->
-    <header class="bg-white shadow">
-      <div class="max-w-7xl mx-auto px-4 py-6 flex justify-between items-center">
-        <h1 class="text-2xl font-bold">Voice Agent Solutions</h1>
-        <nav>
-          <a href="#services" class="mx-2 text-gray-600 hover:text-black">Services</a>
-          <a href="#about" class="mx-2 text-gray-600 hover:text-black">About</a>
-          <a href="#demo" class="mx-2 text-gray-600 hover:text-black">Demo</a>
-          <a href="#contact" class="mx-2 text-gray-600 hover:text-black">Contact</a>
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur border-b border-gray-200">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+        <a href="#home" class="flex items-center space-x-2">
+          <span class="inline-flex h-9 w-9 items-center justify-center rounded-xl bg-brand-600 text-white font-semibold">VA</span>
+          <span class="text-xl font-semibold">Voice Agent Solutions</span>
+        </a>
+        <nav class="hidden md:flex items-center space-x-8 text-sm font-medium">
+          <a href="#services" class="hover:text-brand-700">Services</a>
+          <a href="#solutions" class="hover:text-brand-700">Solutions</a>
+          <a href="#demos" class="hover:text-brand-700">Demo Models</a>
+          <a href="#about" class="hover:text-brand-700">About</a>
+          <a href="#contact" class="px-4 py-2 rounded-lg bg-brand-600 text-white hover:bg-brand-700">Contact</a>
         </nav>
       </div>
     </header>
 
     <!-- Hero -->
-    <section class="bg-blue-100 py-20 text-center">
-      <h2 class="text-4xl font-bold mb-4">Automate Customer Calls with Voice AI</h2>
-      <p class="text-lg max-w-xl mx-auto">
-        We build intelligent, phone-based assistants that handle scheduling, lead intake, and customer support—tailored for industries like healthcare, legal, auto repair, and more.
-      </p>
-    </section>
-
-    <!-- Services -->
-    <section id="services" class="py-16 max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl font-bold mb-8 text-center">Industries We Serve</h3>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Healthcare</h4>
-          <p>Book patient appointments, manage reminders, and answer FAQs.</p>
+    <section id="home" class="relative overflow-hidden bg-gradient-to-b from-white via-blue-50 to-white">
+      <div class="max-w-7xl mx-auto px-4 py-20 grid md:grid-cols-2 gap-12 items-center">
+        <div class="fade-up">
+          <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold bg-blue-100 text-brand-800">AI Voice Agents for Real Businesses</span>
+          <h1 class="mt-4 text-4xl sm:text-5xl font-extrabold leading-tight text-gray-900">
+            Automate Calls. Book More. <span class="text-brand-600">24/7.</span>
+          </h1>
+          <p class="mt-4 text-lg text-gray-600 max-w-prose">We design production-ready voice assistants that handle scheduling, intake, and support for clinics, law firms, real estate teams, auto shops, and more—integrated with your calendars and tools.</p>
+          <div class="mt-8 flex flex-wrap gap-3">
+            <a href="#demos" class="px-5 py-3 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-700">Try the Demos</a>
+            <a href="#contact" class="px-5 py-3 rounded-lg bg-white border border-gray-300 text-gray-800 font-semibold hover:border-gray-400">Get a Quote</a>
+          </div>
+          <dl class="mt-10 grid grid-cols-3 gap-4 text-center">
+            <div class="bg-white rounded-xl border p-4">
+              <dt class="text-xs text-gray-500">Avg. response</dt>
+              <dd class="text-xl font-bold">&lt; 1s</dd>
+            </div>
+            <div class="bg-white rounded-xl border p-4">
+              <dt class="text-xs text-gray-500">Appointments</dt>
+              <dd class="text-xl font-bold">Auto‑booked</dd>
+            </div>
+            <div class="bg-white rounded-xl border p-4">
+              <dt class="text-xs text-gray-500">Coverage</dt>
+              <dd class="text-xl font-bold">24 / 7</dd>
+            </div>
+          </dl>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Legal</h4>
-          <p>Handle lead intake, qualify cases, and schedule consultations.</p>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Auto Repair</h4>
-          <p>Set service appointments and collect vehicle information 24/7.</p>
+        <div class="fade-up md:order-last">
+          <div class="relative rounded-2xl border bg-white shadow-xl overflow-hidden">
+            <img src="https://images.unsplash.com/photo-1525182008055-f88b95ff7980?q=80&w=1600&auto=format&fit=crop" class="h-80 w-full object-cover" alt="Call automation"/>
+            <div class="absolute inset-0 bg-gradient-to-tr from-brand-900/10 via-transparent to-transparent"></div>
+          </div>
         </div>
       </div>
     </section>
 
-    <!-- About -->
-    <section id="about" class="bg-white py-16 px-4 max-w-4xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-4">Why Choose Us?</h3>
-      <p class="text-lg">
-        We bring your phone lines to life with AI-powered assistants that handle real conversations using natural-sounding voices. Our solutions reduce staff workload, improve responsiveness, and integrate with your tools like Google Calendar.
-      </p>
+    <!-- Services / Value Props -->
+    <section id="services" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center">What We Build</h2>
+        <p class="mt-3 text-center text-gray-600">Turn key voice agents tailored to your workflows.</p>
+        <div class="mt-10 grid md:grid-cols-3 gap-6">
+          <div class="fade-up bg-white border rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 grid place-items-center font-bold">HC</div>
+            <h3 class="mt-4 font-semibold text-lg">Healthcare Intake & Scheduling</h3>
+            <p class="mt-2 text-gray-600">Insurance-aware intake, triage language, and Google Calendar bookings with overlap protection.</p>
+          </div>
+          <div class="fade-up bg-white border rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 grid place-items-center font-bold">LG</div>
+            <h3 class="mt-4 font-semibold text-lg">Legal Lead Qualification</h3>
+            <p class="mt-2 text-gray-600">Case screening, conflict checks, and consult scheduling—without exposing internal tools.</p>
+          </div>
+          <div class="fade-up bg-white border rounded-xl p-6">
+            <div class="h-10 w-10 rounded-lg bg-brand-100 text-brand-700 grid place-items-center font-bold">SR</div>
+            <h3 class="mt-4 font-semibold text-lg">Service & Retail Bookings</h3>
+            <p class="mt-2 text-gray-600">Auto repair, barbers, gyms—any SMB that needs accurate, fast phone support and bookings.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Solutions / Feature Strip -->
+    <section id="solutions" class="py-20 bg-gradient-to-b from-blue-50 to-white">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+        <div class="fade-up order-last md:order-first">
+          <h2 class="text-3xl font-bold">Built for real operations</h2>
+          <ul class="mt-6 space-y-3 text-gray-700">
+            <li class="flex gap-3"><span class="text-brand-600">✔</span> Natural conversation, turn‑taking and interruption handling</li>
+            <li class="flex gap-3"><span class="text-brand-600">✔</span> Calendar checks with overlap prevention</li>
+            <li class="flex gap-3"><span class="text-brand-600">✔</span> Knowledge‑base answers with progressive disclosure</li>
+            <li class="flex gap-3"><span class="text-brand-600">✔</span> Outbound follow‑ups via webhooks/Make/Zapier</li>
+          </ul>
+          <div class="mt-8 flex gap-3">
+            <a href="#contact" class="px-5 py-3 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-700">Start a project</a>
+            <a href="#demos" class="px-5 py-3 rounded-lg border font-semibold">See demos</a>
+          </div>
+        </div>
+        <div class="fade-up">
+          <div class="rounded-2xl border bg-white p-6 shadow-xl">
+            <h3 class="font-semibold">How it works</h3>
+            <ol class="mt-4 grid gap-3 text-sm text-gray-700">
+              <li class="flex gap-3"><span class="text-brand-600 font-bold">1</span> Share your script, hours, and calendar.</li>
+              <li class="flex gap-3"><span class="text-brand-600 font-bold">2</span> We configure your agent & knowledge base.</li>
+              <li class="flex gap-3"><span class="text-brand-600 font-bold">3</span> Embed the widget or forward a phone number.</li>
+              <li class="flex gap-3"><span class="text-brand-600 font-bold">4</span> Track calls and conversions in your dashboard.</li>
+            </ol>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Demo Models -->
-    <section id="demo" class="py-16 bg-gray-100 px-4 max-w-6xl mx-auto">
-      <h3 class="text-3xl font-bold mb-8 text-center">Demo Models</h3>
+    <section id="demos" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4">
+        <h2 class="text-3xl font-bold text-center">Demo Models</h2>
+        <p class="mt-2 text-center text-gray-600">Click a card to open the live chat widget.</p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Speedy Auto & Oil (inline) -->
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-3">🚗 Speedy Auto & Oil</h4>
-          <div id="speedy-inline" class="w-full min-h-[420px] border border-gray-200 rounded-xl overflow-hidden"></div>
+        <div class="mt-10 grid md:grid-cols-2 gap-6">
+          <!-- Card Template: each opens widget with a query param to pick assistant -->
+          <button data-assistant="a7517e87-c948-4b86-a61e-1e796c761ba7" class="demo-card text-left bg-white border rounded-xl p-5 hover:shadow-lg transition">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🚗</span>
+              <h3 class="font-semibold text-lg">Speedy Auto & Oil</h3>
+            </div>
+            <p class="mt-1 text-sm text-gray-600">Service intake and appointment booking.</p>
+          </button>
+
+          <button data-assistant="77258f53-3a2e-4229-a4ad-5d913608d0d3" class="demo-card text-left bg-white border rounded-xl p-5 hover:shadow-lg transition">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🏡</span>
+              <h3 class="font-semibold text-lg">Clara Homes</h3>
+            </div>
+            <p class="mt-1 text-sm text-gray-600">Buyer/seller qualification with consult booking.</p>
+          </button>
+
+          <button data-assistant="0818064d-a482-4050-9cf8-1c81ec8834b4" class="demo-card text-left bg-white border rounded-xl p-5 hover:shadow-lg transition">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">⚖️</span>
+              <h3 class="font-semibold text-lg">Crane, Poole & Schmidt</h3>
+            </div>
+            <p class="mt-1 text-sm text-gray-600">Legal intake & consultation scheduling.</p>
+          </button>
+
+          <button data-assistant="89b441e6-56eb-46f4-96df-a6467273641c" class="demo-card text-left bg-white border rounded-xl p-5 hover:shadow-lg transition">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🦷</span>
+              <h3 class="font-semibold text-lg">Smile Studio Dental</h3>
+            </div>
+            <p class="mt-1 text-sm text-gray-600">30‑min dental consult bookings & FAQs.</p>
+          </button>
+
+          <button data-assistant="20840a5a-9838-42a0-bc3e-7d7647cec140" class="demo-card md:col-span-2 text-left bg-white border rounded-xl p-5 hover:shadow-lg transition">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">🏥</span>
+              <h3 class="font-semibold text-lg">Newport Coast Urgent Care</h3>
+            </div>
+            <p class="mt-1 text-sm text-gray-600">Triage language, hours, and scheduling guidance.</p>
+          </button>
         </div>
 
-        <!-- Clara Homes (inline) -->
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-3">🏡 Clara Homes</h4>
-          <div id="clara-inline" class="w-full min-h-[420px] border border-gray-200 rounded-xl overflow-hidden"></div>
-        </div>
+        <!-- Vapi Widget Embed (single)—assistant switched via JS attribute -->
+        <vapi-widget id="vapi-live" assistant-id="20840a5a-9838-42a0-bc3e-7d7647cec140" public-key="dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83"></vapi-widget>
+        <script src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js" async type="text/javascript"></script>
+      </div>
+    </section>
 
-        <!-- Crane, Poole & Schmidt (inline) -->
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-3">⚖️ Crane, Poole & Schmidt</h4>
-          <div id="crane-inline" class="w-full min-h-[420px] border border-gray-200 rounded-xl overflow-hidden"></div>
+    <!-- About -->
+    <section id="about" class="py-20 bg-gray-50">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+        <div class="fade-up">
+          <h2 class="text-3xl font-bold">Why teams choose us</h2>
+          <p class="mt-3 text-gray-700">We obsess over reliability: correct local time handling, overlap‑safe calendar checks, and polite, natural speech with progressive disclosure. Every assistant is tuned for your industry and brand voice.</p>
+          <div class="mt-6 grid grid-cols-2 gap-4 text-sm">
+            <div class="bg-white border rounded-xl p-4">Zero‑overlap bookings</div>
+            <div class="bg-white border rounded-xl p-4">Knowledge‑base answers</div>
+            <div class="bg-white border rounded-xl p-4">Outbound follow‑ups</div>
+            <div class="bg-white border rounded-xl p-4">Analytics & call logs</div>
+          </div>
+        </div>
+        <div class="fade-up">
+          <div class="rounded-2xl overflow-hidden border shadow-xl bg-white">
+            <img src="https://images.unsplash.com/photo-1525183882198-3c5dfb2b0fef?q=80&w=1600&auto=format&fit=crop" class="w-full h-80 object-cover" alt="Team"/>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Contact -->
-    <section id="contact" class="py-16 text-center">
-      <h3 class="text-2xl font-bold mb-2">Let’s Build Your Assistant</h3>
-      <p>Email us at <a href="mailto:carlyle.straughn@gmail.com" class="text-blue-600 underline">carlyle.straughn@gmail.com</a></p>
+    <section id="contact" class="py-20 bg-white">
+      <div class="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-10 items-start">
+        <div>
+          <h2 class="text-3xl font-bold">Let’s Build Your Assistant</h2>
+          <p class="mt-3 text-gray-600">Tell us about your use‑case and we’ll follow up within 1 business day.</p>
+          <ul class="mt-6 space-y-2 text-gray-700 text-sm">
+            <li>📞 Optional: add a phone number to forward your line</li>
+            <li>🗂️ Bring your scripts & hours; we’ll convert them into prompt logic</li>
+            <li>🔗 We support Google Calendar, Make/Zapier webhooks, and custom tools</li>
+          </ul>
+        </div>
+        <form class="bg-gray-50 border rounded-xl p-6 grid gap-4">
+          <input class="border rounded-lg px-3 py-2" placeholder="Your name" required />
+          <input class="border rounded-lg px-3 py-2" placeholder="Your email" type="email" required />
+          <textarea class="border rounded-lg px-3 py-2" rows="5" placeholder="What do you want your agent to do?"></textarea>
+          <button class="mt-2 px-5 py-3 rounded-lg bg-brand-600 text-white font-semibold hover:bg-brand-700" type="submit">Submit inquiry</button>
+        </form>
+      </div>
     </section>
 
-    <footer class="bg-white py-4 text-center text-sm text-gray-500">
-      &copy; 2025 Voice Agent Solutions. All rights reserved.
+    <footer class="bg-white border-t">
+      <div class="max-w-7xl mx-auto px-4 py-6 text-sm text-gray-500 flex items-center justify-between">
+        <p>© 2025 Voice Agent Solutions. All rights reserved.</p>
+        <a class="text-brand-700 hover:underline" href="mailto:carlyle.straughn@gmail.com">carlyle.straughn@gmail.com</a>
+      </div>
     </footer>
 
-    <!-- Load SDK ONCE -->
-    <script
-      src="https://unpkg.com/@vapi-ai/client-sdk-react/dist/embed/widget.umd.js"
-      async
-      type="text/javascript"
-    ></script>
-
     <script>
-      // Helper: wait until the custom element is defined so we can safely create instances.
-      function whenVapiReady() {
-        return new Promise((resolve) => {
-          const check = () => {
-            if (window.customElements && customElements.get('vapi-widget')) return resolve();
-            setTimeout(check, 50);
-          };
-          check();
-        });
-      }
+      // simple reveal on scroll
+      const io = new IntersectionObserver((entries)=>{
+        entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('show'); io.unobserve(e.target) } })
+      },{threshold:.12});
+      document.querySelectorAll('.fade-up').forEach(el=>io.observe(el));
 
-      function mountInlineWidget(containerSelector, assistantId, publicKey) {
-        const host = document.querySelector(containerSelector);
-        if (!host) return;
-
-        const el = document.createElement('vapi-widget');
-        el.setAttribute('assistant-id', assistantId);
-        el.setAttribute('public-key', publicKey);
-        el.setAttribute('data-mode', 'inline');
-        // styling for inline frame
-        el.style.display = 'block';
-        el.style.width = '100%';
-        el.style.minHeight = '420px';
-        el.style.border = '0';
-        host.appendChild(el);
-      }
-
-      function mountBubble(assistantId, publicKey) {
-        // Only one bubble on the whole site
-        const el = document.createElement('vapi-widget');
-        el.setAttribute('assistant-id', assistantId);
-        el.setAttribute('public-key', publicKey);
-        el.setAttribute('data-mode', 'bubble');
-        el.setAttribute('data-open', 'false');
-        el.setAttribute('data-position', 'bottom-right');
-        document.body.appendChild(el);
-      }
-
-      (async () => {
-        await whenVapiReady();
-
-        // Inline demos
-        const PK = 'dfa7f6ae-5159-46c9-8b0c-ba6d3c1b1b83';
-        mountInlineWidget('#speedy-inline', 'a7517e87-c948-4b86-a61e-1e796c761ba7', PK);
-        mountInlineWidget('#clara-inline',  '77258f53-3a2e-4229-a4ad-5d913608d0d3', PK);
-        mountInlineWidget('#crane-inline',  '0818064d-a482-4050-9cf8-1c81ec8834b4', PK);
-
-        // Single global bubble: Newport Coast Urgent Care
-        mountBubble('20840a5a-9838-42a0-bc3e-7d7647cec140', PK);
-      })();
+      // Swap a single Vapi widget's assistant-id based on clicked card
+      const widgetEl = document.getElementById('vapi-live');
+      document.querySelectorAll('.demo-card').forEach(card=>{
+        card.addEventListener('click', ()=>{
+          const id = card.getAttribute('data-assistant');
+          if(widgetEl && id){ widgetEl.setAttribute('assistant-id', id); }
+          // open the widget bubble if the SDK supports an imperative open (kept simple)
+          // Users can click the bubble to start chatting.
+        })
+      });
     </script>
-
-    <!-- Failsafe to keep the bubble on top -->
-    <style>
-      .vapi-bubble { z-index: 2147483000 !important; }
-    </style>
   </body>
 </html>
