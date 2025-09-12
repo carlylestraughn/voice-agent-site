@@ -1,128 +1,422 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Voice Agent Solutions</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-      html { scroll-behavior: smooth; }
-      .gradient-bg { background: linear-gradient(135deg, #2563eb, #1e40af); }
-    </style>
-  </head>
-  <body class="bg-gray-50 text-gray-800">
-    <header class="bg-white shadow sticky top-0 z-50">
-      <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-        <h1 class="text-2xl font-bold text-blue-700">Voice Agent Solutions</h1>
-        <nav>
-          <a href="#services" class="mx-2 text-gray-600 hover:text-blue-700">Services</a>
-          <a href="#about" class="mx-2 text-gray-600 hover:text-blue-700">About</a>
-          <a href="#demo" class="mx-2 text-gray-600 hover:text-blue-700">Demo Models</a>
-          <a href="#integrations" class="mx-2 text-gray-600 hover:text-blue-700">Integrations</a>
-          <a href="#future" class="mx-2 text-gray-600 hover:text-blue-700">Future Releases</a>
-          <a href="#contact" class="mx-2 text-gray-600 hover:text-blue-700">Contact</a>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Voice Agent Solutions</title>
+  <meta name="description" content="AI voice agents that answer calls, qualify leads, and book appointments 24/7." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    :root {
+      --glass-bg: rgba(255,255,255,0.6);
+      --glass-border: rgba(255,255,255,0.4);
+      --blue-1: #1e3a8a; /* indigo-800-ish */
+      --blue-2: #3b82f6; /* blue-500 */
+      --blue-3: #60a5fa; /* blue-400 */
+      --ink: #0f172a;    /* slate-900 */
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
+    .glass { background: var(--glass-bg); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px); border: 1px solid var(--glass-border); }
+    .shadow-soft { box-shadow: 0 10px 30px rgba(2, 6, 23, 0.10); }
+
+    /* Blue undertone gradients */
+    .bg-hero { background: radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.35), transparent 60%),
+                           radial-gradient(900px 500px at 110% 20%, rgba(59,130,246,.25), transparent 60%),
+                           linear-gradient(180deg, #1e3a8a 0%, #1f49b5 40%, #2563eb 100%); }
+    .grad-text { background: linear-gradient(90deg, #ffffff, #c7d2fe, #e0e7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
+
+    /* Reveal on scroll */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.show { opacity: 1; transform: translateY(0); }
+
+    /* Hover “lift” and glow */
+    .lift { transition: transform .25s ease, box-shadow .25s ease; }
+    .lift:hover { transform: translateY(-4px); box-shadow: 0 14px 38px rgba(37, 99, 235, .18); }
+
+    /* Buttons */
+    .btn { transition: transform .15s ease, box-shadow .2s ease; }
+    .btn:active { transform: translateY(1px); }
+
+    /* Nav active */
+    .nav-link.active { color:#0f172a; }
+
+    /* Animated blobs */
+    .blob { position:absolute; filter: blur(36px); opacity:.35; animation: float 18s ease-in-out infinite; }
+    .blob-1 { width:380px; height:380px; left:-120px; top:-80px; background: #60a5fa; animation-delay: 0s;}
+    .blob-2 { width:320px; height:320px; right:-140px; bottom:-100px; background: #3b82f6; animation-delay: 3s;}
+    @keyframes float { 0%,100%{ transform: translateY(0) translateX(0)} 50%{ transform: translateY(18px) translateX(10px)} }
+
+    /* Agent "video" : animated phone + waveform (loop) */
+    .agent-card { position: relative; background: white; border-radius: 16px; padding: 20px; border: 1px solid rgba(15,23,42,.06); }
+    .agent-ring { position: relative; width: 80px; height: 80px; border-radius: 9999px; background: conic-gradient(from 0deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6); animation: spin 6s linear infinite; }
+    .agent-inner { position: absolute; inset: 6px; background: white; border-radius: 9999px; display:flex; align-items:center; justify-content:center; }
+    @keyframes spin { to { transform: rotate(360deg);} }
+    .bars { display:flex; align-items:flex-end; gap:6px; height: 38px; }
+    .bar { width:6px; background: linear-gradient(180deg, #60a5fa, #2563eb); border-radius: 3px; animation: bounce 1.2s ease-in-out infinite; }
+    .bar:nth-child(2){ animation-delay: .1s } .bar:nth-child(3){ animation-delay: .2s }
+    .bar:nth-child(4){ animation-delay: .3s } .bar:nth-child(5){ animation-delay: .4s }
+    @keyframes bounce { 0%,100%{ height:8px } 50%{ height:38px } }
+
+    /* Tag pills */
+    .pill { background: rgba(37,99,235,.08); color: #1e40af; border: 1px solid rgba(37,99,235,.18) }
+
+    /* Video placeholder frame */
+    .frame { background: linear-gradient(180deg, rgba(96,165,250,.15), rgba(59,130,246,.08)); }
+
+    /* Focus ring */
+    .ring-focus:focus { outline: none; box-shadow: 0 0 0 4px rgba(37,99,235,.25); }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 selection:bg-blue-200 selection:text-slate-900">
+
+  <!-- NAV -->
+  <header class="sticky top-0 z-50">
+    <div class="glass shadow-soft">
+      <div class="mx-auto max-w-7xl px-4 py-3 flex items-center justify-between">
+        <a href="#home" class="flex items-center gap-2">
+          <span class="inline-flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-blue-600 to-indigo-600 text-white font-extrabold">VA</span>
+          <span class="font-semibold text-slate-900">Voice Agent Solutions</span>
+        </a>
+        <nav class="hidden md:flex items-center gap-6 text-slate-600">
+          <a class="nav-link hover:text-slate-900" href="#features">Features</a>
+          <a class="nav-link hover:text-slate-900" href="#industries">Industries</a>
+          <a class="nav-link hover:text-slate-900" href="#demos">Demo Models</a>
+          <a class="nav-link hover:text-slate-900" href="#pricing">Pricing</a>
+          <a class="nav-link hover:text-slate-900" href="#how">How It Works</a>
+          <a class="nav-link hover:text-slate-900" href="#faq">FAQ</a>
+          <a class="nav-link hover:text-slate-900" href="#contact">Contact</a>
+        </nav>
+        <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white/70 hover:bg-white ring-1 ring-slate-200">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none"><path d="M4 6h16M4 12h16M4 18h16" stroke="#111827" stroke-width="2" stroke-linecap="round"/></svg>
+        </button>
+      </div>
+      <div id="mobileMenu" class="md:hidden hidden border-t border-white/50">
+        <nav class="px-4 py-3 grid gap-3 text-slate-700 bg-white/85 backdrop-blur">
+          <a class="block" href="#features">Features</a>
+          <a class="block" href="#industries">Industries</a>
+          <a class="block" href="#demos">Demo Models</a>
+          <a class="block" href="#pricing">Pricing</a>
+          <a class="block" href="#how">How It Works</a>
+          <a class="block" href="#faq">FAQ</a>
+          <a class="block" href="#contact">Contact</a>
         </nav>
       </div>
-    </header>
+    </div>
+  </header>
 
-    <section class="gradient-bg py-20 text-center text-white">
-      <h2 class="text-4xl font-bold mb-4">Automate Customer Calls with Voice AI</h2>
-      <p class="text-lg max-w-xl mx-auto">
-        We build intelligent, phone-based assistants that handle scheduling, lead intake, and customer support—tailored for industries like healthcare, legal, auto repair, and more.
-      </p>
-    </section>
+  <!-- HERO -->
+  <section id="home" class="relative overflow-hidden bg-hero">
+    <div class="blob blob-1 rounded-full"></div>
+    <div class="blob blob-2 rounded-full"></div>
 
-    <section id="services" class="py-16 max-w-6xl mx-auto px-4">
-      <h3 class="text-3xl font-bold mb-8 text-center text-blue-700">Industries We Serve</h3>
-      <p class="text-center mb-8 text-gray-600">Pre-built configurations for high–call–volume verticals.</p>
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Healthcare</h4>
-          <p>Book patient visits, manage prep instructions.</p>
+    <div class="mx-auto max-w-7xl px-6 py-20 text-white">
+      <div class="grid lg:grid-cols-2 gap-10 items-center">
+        <div class="reveal">
+          <h1 class="text-4xl md:text-5xl font-extrabold leading-tight">
+            AI Voice Agents that <span class="grad-text">answer, qualify, and book</span> — 24/7
+          </h1>
+          <p class="mt-4 text-white/90 text-lg max-w-2xl">
+            Reduce missed calls and manual scheduling. Our natural-sounding voice agents handle real conversations, check your calendar, and book appointments automatically.
+          </p>
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href="#demos" class="btn inline-flex items-center gap-2 rounded-xl bg-white text-slate-900 px-5 py-3 font-semibold ring-1 ring-white/50 hover:bg-white/90 ring-focus lift">Try the Demos</a>
+            <a href="#contact" class="btn inline-flex items-center gap-2 rounded-xl bg-transparent text-white px-5 py-3 font-semibold ring-1 ring-white/50 hover:bg-white/10 ring-focus">Book a Consult</a>
+          </div>
+
+          <div class="mt-6 flex items-center gap-2 text-sm text-white/80">
+            <span class="pill px-3 py-1 rounded-full">Google Calendar</span>
+            <span class="pill px-3 py-1 rounded-full">Zapier/Make</span>
+            <span class="pill px-3 py-1 rounded-full">Analytics</span>
+          </div>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Legal</h4>
-          <p>Qualify cases and schedule intakes.</p>
+
+        <!-- Animated “Agent Answering” Graphic -->
+        <div class="reveal glass rounded-2xl p-6 shadow-soft">
+          <div class="grid sm:grid-cols-[100px,1fr] gap-6 items-center">
+            <div class="relative flex items-center justify-center">
+              <div class="agent-ring"></div>
+              <div class="agent-inner">
+                <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                  <path d="M6 8v8M18 8v8M9 5h6a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3Z" stroke="#2563eb" stroke-width="1.8"/>
+                  <path d="M10 9h4M10 13h4" stroke="#1e3a8a" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+              </div>
+            </div>
+            <div>
+              <h3 class="text-lg font-semibold text-slate-900">Live Call Simulation</h3>
+              <p class="text-slate-600 mt-1">Greeting, availability check, and confirmation—looped for demo visuals.</p>
+              <div class="mt-4 bars">
+                <div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div>
+              </div>
+              <div class="mt-4 frame rounded-xl p-3 text-sm text-slate-700">
+                <p><strong>Agent:</strong> “Thanks for calling! How can I help you today?”</p>
+                <p class="mt-1"><strong>Caller:</strong> “Can I book a cleaning for tomorrow at 10 AM?”</p>
+                <p class="mt-1"><strong>Agent:</strong> “One moment—checking availability… 10 AM is open. Shall I book it?”</p>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Real Estate</h4>
-          <p>Capture leads and book consults.</p>
+        <!-- /Animated Graphic -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section id="features" class="py-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">Features</h2>
+      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Built for reliability and real ROI—no missed calls, faster bookings, and better customer experience.</p>
+      <div class="mt-10 grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold text-lg">Natural Voice</h3>
+          <p class="text-slate-600 mt-2">Human-like conversations with turn-taking, clarifications, and confirmations.</p>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Auto Repair</h4>
-          <p>Service intake and vehicle details.</p>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold text-lg">Smart Scheduling</h3>
+          <p class="text-slate-600 mt-2">Checks calendar availability and books within your business rules.</p>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Financial Services</h4>
-          <p>Support loan applications, refinancing inquiries, and client onboarding.</p>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold text-lg">Lead Intake</h3>
+          <p class="text-slate-600 mt-2">Collects names, contact info, preferences, and reasons for calling.</p>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">Hospitality</h4>
-          <p>Handle reservations, guest services, and event inquiries.</p>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold text-lg">Integrations</h3>
+          <p class="text-slate-600 mt-2">Google Calendar, webhooks, Zapier/Make, and more.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold text-lg">Analytics & Logs</h3>
+          <p class="text-slate-600 mt-2">See call transcripts, outcomes, and booking summaries.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold text-lg">Custom Prompts</h3>
+          <p class="text-slate-600 mt-2">Tailored dialogues and guardrails for your industry and workflow.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="about" class="bg-white py-16 px-4 max-w-4xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-4 text-blue-700">Why Choose Us?</h3>
-      <p class="text-lg text-gray-700">
-        We bring your phone lines to life with AI-powered assistants that handle real conversations using natural-sounding voices. Our solutions reduce staff workload, improve responsiveness, and integrate seamlessly with your tools like Google Calendar and Microsoft Outlook.
-      </p>
-    </section>
-
-    <section id="demo" class="py-16 bg-gray-100 px-4 max-w-6xl mx-auto">
-      <h3 class="text-3xl font-bold mb-6 text-center text-blue-700">Demo Models</h3>
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">🚗 Speedy Auto & Oil</h4>
-          <p>Phone number: (placeholder)</p>
+  <!-- INDUSTRIES -->
+  <section id="industries" class="py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">Industries We Serve</h2>
+      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Pre-built configurations for high–call-volume verticals.</p>
+      <div class="mt-10 grid md:grid-cols-4 gap-6">
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Healthcare</h3>
+          <p class="text-slate-600 mt-2">Book patient visits, manage prep instructions.</p>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">🏡 Clara Homes</h4>
-          <p>Phone number: (placeholder)</p>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Legal</h3>
+          <p class="text-slate-600 mt-2">Qualify cases and schedule intakes.</p>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">⚖️ Crane, Poole & Schmidt</h4>
-          <p>Phone number: (placeholder)</p>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Real Estate</h3>
+          <p class="text-slate-600 mt-2">Capture leads and book consults.</p>
         </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">🦷 Smile Studio Dental</h4>
-          <p>Phone number: (placeholder)</p>
-        </div>
-        <div class="bg-white shadow rounded-lg p-6">
-          <h4 class="text-xl font-semibold mb-2">🏥 Newport Coast Urgent Care</h4>
-          <p>Phone number: (placeholder)</p>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Auto Repair</h3>
+          <p class="text-slate-600 mt-2">Service intake and vehicle details.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="integrations" class="bg-white py-16 px-4 max-w-4xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-4 text-blue-700">Integrations</h3>
-      <p class="text-lg text-gray-700">
-        Connect seamlessly with Google Calendar, Microsoft Outlook, and more.
-      </p>
-    </section>
+  <!-- DEMOS -->
+  <section id="demos" class="py-20 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">Demo Models</h2>
+      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Call the numbers below to try each demo. (Numbers coming soon.)</p>
+      <div class="mt-10 grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Speedy Auto & Oil</h3>
+          <p class="text-slate-600 mt-2">Phone: <span class="font-mono">TBD</span></p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Clara Homes (Real Estate)</h3>
+          <p class="text-slate-600 mt-2">Phone: <span class="font-mono">TBD</span></p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Crane, Poole & Schmidt (Legal)</h3>
+          <p class="text-slate-600 mt-2">Phone: <span class="font-mono">TBD</span></p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Smile Studio Dental</h3>
+          <p class="text-slate-600 mt-2">Phone: <span class="font-mono">TBD</span></p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Newport Coast Urgent Care</h3>
+          <p class="text-slate-600 mt-2">Phone: <span class="font-mono">TBD</span></p>
+        </div>
+      </div>
 
-    <section id="future" class="py-16 bg-gray-100 px-4 max-w-6xl mx-auto text-center">
-      <h3 class="text-3xl font-bold mb-4 text-blue-700">Future Releases</h3>
-      <p class="text-lg text-gray-700 mb-4">
-        Coming November 2025: Outbound calling capabilities that allow agents to proactively reach customers or prospects. These features will enable businesses to:
-      </p>
-      <ul class="text-left max-w-2xl mx-auto list-disc list-inside text-gray-700">
-        <li>Follow up automatically with form submissions or inquiries.</li>
-        <li>Call warm leads provided by your team within minutes.</li>
-        <li>Confirm appointments, send reminders, and reduce no-shows.</li>
-        <li>Enable personalized outbound campaigns without manual dialing.</li>
-      </ul>
-    </section>
+      <!-- “Video” placeholder replaced with looping animated agent card -->
+      <div class="mt-14 grid lg:grid-cols-2 gap-8 items-center">
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="text-xl font-semibold">Demo Visual: AI Agent Answering</h3>
+          <p class="text-slate-600 mt-2">A looping animation that simulates an agent greeting a caller and booking an appointment.</p>
+          <div class="mt-4 agent-card">
+            <div class="grid sm:grid-cols-[100px,1fr] gap-6 items-center">
+              <div class="relative flex items-center justify-center">
+                <div class="agent-ring"></div>
+                <div class="agent-inner">
+                  <svg width="34" height="34" viewBox="0 0 24 24" fill="none">
+                    <path d="M6 8v8M18 8v8M9 5h6a3 3 0 0 1 3 3v8a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3V8a3 3 0 0 1 3-3Z" stroke="#2563eb" stroke-width="1.8"/>
+                    <path d="M10 9h4M10 13h4" stroke="#1e3a8a" stroke-width="1.8" stroke-linecap="round"/>
+                  </svg>
+                </div>
+              </div>
+              <div>
+                <div class="bars"><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div><div class="bar"></div></div>
+                <div class="mt-3 frame rounded-xl p-3 text-sm text-slate-700">
+                  <p><strong>Agent:</strong> “Thanks for calling! How can I help you today?”</p>
+                  <p class="mt-1"><strong>Caller:</strong> “Can I book a 10 AM appointment tomorrow?”</p>
+                  <p class="mt-1"><strong>Agent:</strong> “Checking availability… 10 AM is open. Shall I book it?”</p>
+                </div>
+                <p class="mt-2 text-xs text-slate-500">Swap this block with a real MP4 anytime.</p>
+              </div>
+            </div>
+          </div>
+        </div>
 
-    <section id="contact" class="py-16 text-center">
-      <h3 class="text-2xl font-bold mb-2 text-blue-700">Let’s Build Your Assistant</h3>
-      <p>Email us at <a href="mailto:carlyle.straughn@gmail.com" class="text-blue-600 underline">carlyle.straughn@gmail.com</a></p>
-    </section>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="text-xl font-semibold">What You’ll See</h3>
+          <ul class="mt-3 space-y-2 text-slate-700 list-disc list-inside">
+            <li>Natural greeting and clarification</li>
+            <li>Availability check against calendar</li>
+            <li>Appointment confirmation and summary</li>
+            <li>Polite closing with next steps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    <footer class="bg-white py-4 text-center text-sm text-gray-500">
-      &copy; 2025 Voice Agent Solutions. All rights reserved.
-    </footer>
-  </body>
+  <!-- PRICING -->
+  <section id="pricing" class="py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">Simple Pricing</h2>
+      <p class="text-center text-slate-600 mt-3 max-w-2xl mx-auto reveal">Tiered by usage, not features. Start small and scale with your call volume.</p>
+
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <div class="rounded-2xl p-8 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="text-xl font-semibold">Basic</h3>
+          <p class="text-3xl font-extrabold mt-2">$200<span class="text-base font-semibold text-slate-500">/mo</span></p>
+          <ul class="mt-4 space-y-2 text-slate-700 list-disc list-inside">
+            <li>Up to 1,000 minutes</li>
+            <li>One assistant + one calendar</li>
+            <li>Email summaries</li>
+          </ul>
+        </div>
+        <div class="rounded-2xl p-8 shadow-soft ring-2 ring-blue-200 bg-white lift reveal">
+          <h3 class="text-xl font-semibold">Premium</h3>
+          <p class="text-3xl font-extrabold mt-2">$400<span class="text-base font-semibold text-slate-500">/mo</span></p>
+          <ul class="mt-4 space-y-2 text-slate-700 list-disc list-inside">
+            <li>Up to 2,500 minutes</li>
+            <li>Multiple assistants & calendars</li>
+            <li>Priority support</li>
+          </ul>
+        </div>
+      </div>
+      <p class="text-center text-slate-500 mt-4 text-sm reveal">Overages billed at cost + margin. One-time setup $2,000.</p>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section id="how" class="py-20">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">How It Works</h2>
+      <div class="mt-10 grid md:grid-cols-3 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">1. Configure</h3>
+          <p class="text-slate-600 mt-2">We tailor prompts, voice, and rules to your business.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">2. Integrate</h3>
+          <p class="text-slate-600 mt-2">Connect calendars, CRMs, or automations via Zapier/Make.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">3. Launch</h3>
+          <p class="text-slate-600 mt-2">Forward your phone or embed a web widget and go live.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section id="faq" class="py-20 bg-slate-50">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">FAQ</h2>
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Can the agent book on my calendar?</h3>
+          <p class="text-slate-600 mt-2">Yes, we integrate with Google Calendar for availability checks and booking.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">Will it work for my industry?</h3>
+          <p class="text-slate-600 mt-2">We have templates for healthcare, legal, real estate, and auto—plus custom builds.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">How do demos work?</h3>
+          <p class="text-slate-600 mt-2">Call the numbers in the Demo Models section (coming soon) to try each assistant.</p>
+        </div>
+        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
+          <h3 class="font-semibold">What about SMS?</h3>
+          <p class="text-slate-600 mt-2">We can add SMS confirmations via Twilio or 3rd-party gateways using webhooks.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section id="contact" class="py-20 bg-white">
+    <div class="mx-auto max-w-3xl px-6 text-center">
+      <h2 class="text-3xl font-bold reveal">Let’s Build Your Assistant</h2>
+      <p class="text-slate-600 mt-2 reveal">Tell us about your use case and we’ll follow up with a tailored plan.</p>
+
+      <form class="mt-8 grid gap-4 text-left reveal">
+        <input class="w-full rounded-xl border border-slate-200 p-3 ring-focus" type="text" placeholder="Your Name" required />
+        <input class="w-full rounded-xl border border-slate-200 p-3 ring-focus" type="email" placeholder="Your Email" required />
+        <textarea class="w-full rounded-xl border border-slate-200 p-3 ring-focus" rows="4" placeholder="What type of assistant are you looking for?"></textarea>
+        <button type="submit" class="btn inline-flex items-center justify-center rounded-xl bg-blue-600 hover:bg-blue-700 text-white px-5 py-3 font-semibold ring-focus lift">Submit Inquiry</button>
+      </form>
+
+      <p class="mt-6 text-slate-600 reveal">Prefer email? <a class="text-blue-600 hover:underline" href="mailto:carlyle.straughn@gmail.com">carlyle.straughn@gmail.com</a></p>
+    </div>
+  </section>
+
+  <footer class="py-8 text-center text-sm text-slate-500">
+    &copy; 2025 Voice Agent Solutions. All rights reserved.
+  </footer>
+
+  <script>
+    // Mobile menu
+    const btn = document.getElementById('menuBtn');
+    const menu = document.getElementById('mobileMenu');
+    btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
+
+    // Scrollspy for desktop links
+    const links = document.querySelectorAll('.nav-link');
+    const ids = Array.from(links).map(a => a.getAttribute('href'));
+    const sections = ids.map(id => document.querySelector(id));
+    const onScroll = () => {
+      const y = window.scrollY + 100;
+      let currentIndex = 0;
+      sections.forEach((sec, i) => { if (sec && sec.offsetTop <= y) currentIndex = i; });
+      links.forEach(l => l.classList.remove('active'));
+      if (links[currentIndex]) links[currentIndex].classList.add('active');
+    };
+    document.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    // Reveal on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+  </script>
+</body>
 </html>
