@@ -10,65 +10,33 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root {
+    :root{
       --glass-bg: rgba(255,255,255,0.6);
       --glass-border: rgba(255,255,255,0.4);
-      --blue-1: #1e3a8a; /* indigo-800-ish */
-      --blue-2: #3b82f6; /* blue-500 */
-      --blue-3: #60a5fa; /* blue-400 */
-      --ink: #0f172a;    /* slate-900 */
+      --blue-1:#1e3a8a; --blue-2:#2563eb; --blue-3:#60a5fa; --ink:#0f172a;
     }
-    html { scroll-behavior: smooth; }
-    body { font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial; }
-    .glass { background: var(--glass-bg); backdrop-filter: saturate(160%) blur(16px); -webkit-backdrop-filter: saturate(160%) blur(16px); border: 1px solid var(--glass-border); }
-    .shadow-soft { box-shadow: 0 10px 30px rgba(2, 6, 23, 0.10); }
-
-    /* Blue undertone gradients */
-    .bg-hero { background: radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.35), transparent 60%),
-                           radial-gradient(900px 500px at 110% 20%, rgba(59,130,246,.25), transparent 60%),
-                           linear-gradient(180deg, #1e3a8a 0%, #1f49b5 40%, #2563eb 100%); }
-    .grad-text { background: linear-gradient(90deg, #ffffff, #c7d2fe, #e0e7ff); -webkit-background-clip: text; background-clip: text; color: transparent; }
-
-    /* Reveal on scroll */
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s ease, transform .7s ease; }
-    .reveal.show { opacity: 1; transform: translateY(0); }
-
-    /* Hover “lift” and glow */
-    .lift { transition: transform .25s ease, box-shadow .25s ease; }
-    .lift:hover { transform: translateY(-4px); box-shadow: 0 14px 38px rgba(37, 99, 235, .18); }
-
-    /* Buttons */
-    .btn { transition: transform .15s ease, box-shadow .2s ease; }
-    .btn:active { transform: translateY(1px); }
-
-    /* Nav active */
-    .nav-link.active { color:#0f172a; }
-
-    /* Animated blobs */
-    .blob { position:absolute; filter: blur(36px); opacity:.35; animation: float 18s ease-in-out infinite; }
-    .blob-1 { width:380px; height:380px; left:-120px; top:-80px; background: #60a5fa; animation-delay: 0s;}
-    .blob-2 { width:320px; height:320px; right:-140px; bottom:-100px; background: #3b82f6; animation-delay: 3s;}
-    @keyframes float { 0%,100%{ transform: translateY(0) translateX(0)} 50%{ transform: translateY(18px) translateX(10px)} }
-
-    /* Agent "video" : animated phone + waveform (loop) */
-    .agent-card { position: relative; background: white; border-radius: 16px; padding: 20px; border: 1px solid rgba(15,23,42,.06); }
-    .agent-ring { position: relative; width: 80px; height: 80px; border-radius: 9999px; background: conic-gradient(from 0deg, #3b82f6, #60a5fa, #93c5fd, #3b82f6); animation: spin 6s linear infinite; }
-    .agent-inner { position: absolute; inset: 6px; background: white; border-radius: 9999px; display:flex; align-items:center; justify-content:center; }
-    @keyframes spin { to { transform: rotate(360deg);} }
-    .bars { display:flex; align-items:flex-end; gap:6px; height: 38px; }
-    .bar { width:6px; background: linear-gradient(180deg, #60a5fa, #2563eb); border-radius: 3px; animation: bounce 1.2s ease-in-out infinite; }
-    .bar:nth-child(2){ animation-delay: .1s } .bar:nth-child(3){ animation-delay: .2s }
-    .bar:nth-child(4){ animation-delay: .3s } .bar:nth-child(5){ animation-delay: .4s }
-    @keyframes bounce { 0%,100%{ height:8px } 50%{ height:38px } }
-
-    /* Tag pills */
-    .pill { background: rgba(37,99,235,.08); color: #1e40af; border: 1px solid rgba(37,99,235,.18) }
-
-    /* Video placeholder frame */
-    .frame { background: linear-gradient(180deg, rgba(96,165,250,.15), rgba(59,130,246,.08)); }
-
-    /* Focus ring */
-    .ring-focus:focus { outline: none; box-shadow: 0 0 0 4px rgba(37,99,235,.25); }
+    html{scroll-behavior:smooth}
+    body{font-family:Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial}
+    .glass{background:var(--glass-bg);backdrop-filter:saturate(160%) blur(16px);-webkit-backdrop-filter:saturate(160%) blur(16px);border:1px solid var(--glass-border)}
+    .shadow-soft{box-shadow:0 10px 30px rgba(2,6,23,.10)}
+    /* Blue undertone hero */
+    .bg-hero{background:
+      radial-gradient(1200px 600px at 10% -10%, rgba(96,165,250,.35), transparent 60%),
+      radial-gradient(900px 500px at 110% 20%, rgba(59,130,246,.25), transparent 60%),
+      linear-gradient(180deg, #1e3a8a 0%, #1f49b5 40%, #2563eb 100%)}
+    .grad-text{background:linear-gradient(90deg,#fff,#c7d2fe,#e0e7ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .reveal{opacity:0;transform:translateY(18px);transition:opacity .7s ease, transform .7s ease}
+    .reveal.show{opacity:1;transform:translateY(0)}
+    .lift{transition:transform .25s ease, box-shadow .25s ease}
+    .lift:hover{transform:translateY(-4px);box-shadow:0 14px 38px rgba(37,99,235,.18)}
+    .btn{transition:transform .15s ease, box-shadow .2s ease}
+    .btn:active{transform:translateY(1px)}
+    .nav-link.active{color:#0f172a}
+    .blob{position:absolute;filter:blur(36px);opacity:.35;animation:float 18s ease-in-out infinite}
+    .blob-1{width:380px;height:380px;left:-120px;top:-80px;background:#60a5fa}
+    .blob-2{width:320px;height:320px;right:-140px;bottom:-100px;background:#3b82f6;animation-delay:3s}
+    @keyframes float{0%,100%{transform:translateY(0) translateX(0)}50%{transform:translateY(18px) translateX(10px)}}
+    .ring-focus:focus{outline:none;box-shadow:0 0 0 4px rgba(37,99,235,.25)}
   </style>
 </head>
 <body class="bg-slate-50 text-slate-800 selection:bg-blue-200 selection:text-slate-900">
@@ -88,6 +56,7 @@
           <a class="nav-link hover:text-slate-900" href="#pricing">Pricing</a>
           <a class="nav-link hover:text-slate-900" href="#how">How It Works</a>
           <a class="nav-link hover:text-slate-900" href="#faq">FAQ</a>
+          <a class="nav-link hover:text-slate-900" href="#future">Future Releases</a>
           <a class="nav-link hover:text-slate-900" href="#contact">Contact</a>
         </nav>
         <button id="menuBtn" class="md:hidden inline-flex items-center justify-center h-10 w-10 rounded-lg bg-white/70 hover:bg-white ring-1 ring-slate-200">
@@ -102,13 +71,14 @@
           <a class="block" href="#pricing">Pricing</a>
           <a class="block" href="#how">How It Works</a>
           <a class="block" href="#faq">FAQ</a>
+          <a class="block" href="#future">Future Releases</a>
           <a class="block" href="#contact">Contact</a>
         </nav>
       </div>
     </div>
   </header>
 
-  <!-- HERO -->
+  <!-- HERO (kept) -->
   <section id="home" class="relative overflow-hidden bg-hero">
     <div class="blob blob-1 rounded-full"></div>
     <div class="blob blob-2 rounded-full"></div>
@@ -126,15 +96,11 @@
             <a href="#demos" class="btn inline-flex items-center gap-2 rounded-xl bg-white text-slate-900 px-5 py-3 font-semibold ring-1 ring-white/50 hover:bg-white/90 ring-focus lift">Try the Demos</a>
             <a href="#contact" class="btn inline-flex items-center gap-2 rounded-xl bg-transparent text-white px-5 py-3 font-semibold ring-1 ring-white/50 hover:bg-white/10 ring-focus">Book a Consult</a>
           </div>
-
-          <div class="mt-6 flex items-center gap-2 text-sm text-white/80">
-            <span class="pill px-3 py-1 rounded-full">Google Calendar</span>
-            <span class="pill px-3 py-1 rounded-full">Zapier/Make</span>
-            <span class="pill px-3 py-1 rounded-full">Analytics</span>
-          </div>
+          <!-- pills removed as requested -->
         </div>
 
-        <!-- (Removed: Demo Visual + What You’ll See) -->
+        <!-- right column intentionally left empty to preserve hero layout/graphic -->
+        <div class="reveal"></div>
       </div>
     </div>
   </section>
@@ -159,7 +125,7 @@
         </div>
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold text-lg">Integrations</h3>
-          <p class="text-slate-600 mt-2">Google Calendar, webhooks, Zapier/Make, and more.</p>
+          <p class="text-slate-600 mt-2">Google Calendar, Microsoft Outlook, and more.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold text-lg">Analytics & Logs</h3>
@@ -195,6 +161,22 @@
           <h3 class="font-semibold">Auto Repair</h3>
           <p class="text-slate-600 mt-2">Service intake and vehicle details.</p>
         </div>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Financial Services</h3>
+          <p class="text-slate-600 mt-2">Mortgage/loan intake and appointment booking.</p>
+        </div>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Hospitality</h3>
+          <p class="text-slate-600 mt-2">Reservations, guest services, event inquiries.</p>
+        </div>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Home Services</h3>
+          <p class="text-slate-600 mt-2">Dispatch scheduling for HVAC, plumbing, and more.</p>
+        </div>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Education</h3>
+          <p class="text-slate-600 mt-2">Admissions queries and appointment setting.</p>
+        </div>
       </div>
     </div>
   </section>
@@ -226,6 +208,7 @@
           <p class="text-slate-600 mt-2">Phone: <span class="font-mono">TBD</span></p>
         </div>
       </div>
+      <!-- Demo Visual + What You'll See removed -->
     </div>
   </section>
 
@@ -270,7 +253,7 @@
         </div>
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold">2. Integrate</h3>
-          <p class="text-slate-600 mt-2">Connect calendars, CRMs, or automations via Zapier/Make.</p>
+          <p class="text-slate-600 mt-2">Connect calendars, CRMs, or automations as needed.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold">3. Launch</h3>
@@ -287,19 +270,37 @@
       <div class="mt-10 grid md:grid-cols-2 gap-6">
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold">Can the agent book on my calendar?</h3>
-          <p class="text-slate-600 mt-2">Yes, we integrate with Google Calendar for availability checks and booking.</p>
+          <p class="text-slate-600 mt-2">Yes, we integrate with Google Calendar and Microsoft Outlook for availability checks and booking.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold">Will it work for my industry?</h3>
-          <p class="text-slate-600 mt-2">We have templates for healthcare, legal, real estate, and auto—plus custom builds.</p>
+          <p class="text-slate-600 mt-2">We have templates for healthcare, legal, real estate, auto, and more—plus custom builds.</p>
         </div>
         <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
           <h3 class="font-semibold">How do demos work?</h3>
           <p class="text-slate-600 mt-2">Call the numbers in the Demo Models section (coming soon) to try each assistant.</p>
         </div>
-        <div class="bg-white rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 lift reveal">
-          <h3 class="font-semibold">What about SMS?</h3>
-          <p class="text-slate-600 mt-2">We can add SMS confirmations via Twilio or 3rd-party gateways using webhooks.</p>
+        <!-- SMS FAQ removed -->
+      </div>
+    </div>
+  </section>
+
+  <!-- FUTURE RELEASES -->
+  <section id="future" class="py-20 bg-white">
+    <div class="mx-auto max-w-7xl px-6">
+      <h2 class="text-3xl font-bold text-center reveal">Future Releases</h2>
+      <div class="mt-10 grid md:grid-cols-2 gap-6">
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-gradient-to-br from-blue-50 to-white lift reveal">
+          <h3 class="font-semibold">Outbound Calling (Nov 2025)</h3>
+          <p class="text-slate-700 mt-2">
+            Agents will proactively reach customers or prospects—calling warm leads, following up on form submissions, confirming appointments, and reducing no-shows. Supports list imports, throttling, and retry logic with clear opt-out handling.
+          </p>
+        </div>
+        <div class="rounded-2xl p-6 shadow-soft ring-1 ring-slate-100 bg-white lift reveal">
+          <h3 class="font-semibold">Campaign & Reporting</h3>
+          <p class="text-slate-700 mt-2">
+            Configure campaigns, monitor outcomes, and export results to your CRM or spreadsheets. Includes call results, notes, and appointment conversion metrics.
+          </p>
         </div>
       </div>
     </div>
@@ -332,7 +333,7 @@
     const menu = document.getElementById('mobileMenu');
     btn?.addEventListener('click', () => menu.classList.toggle('hidden'));
 
-    // Scrollspy for desktop links
+    // Scrollspy
     const links = document.querySelectorAll('.nav-link');
     const ids = Array.from(links).map(a => a.getAttribute('href'));
     const sections = ids.map(id => document.querySelector(id));
