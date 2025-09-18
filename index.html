@@ -3,168 +3,231 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Voice Agent Solutions</title>
-  <meta name="description" content="AI voice agents that answer calls, qualify leads, and book appointments 24/7." />
+  <title>Straughn Solutions — Voice Agents</title>
+  <meta name="description" content="AI voice agents that answer calls, qualify leads, and book appointments." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      background: #000;
-      color: #fff;
+    :root {
+      --bg: #000;         /* pure black */
+      --ink: #fff;        /* pure white */
+      --ink-2: #d1d5db;   /* light gray for secondary */
+      --ink-3: #9ca3af;   /* mid gray */
     }
     html { scroll-behavior: smooth; }
-
-    /* Animated floating background shapes */
-    .blob {
-      position: absolute;
-      border-radius: 9999px;
-      filter: blur(100px);
-      opacity: 0.15;
-      animation: float 20s ease-in-out infinite;
+    body {
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
     }
-    .blob-1 { width: 500px; height: 500px; top: -200px; left: -200px; background: white; animation-delay: 0s; }
-    .blob-2 { width: 400px; height: 400px; bottom: -150px; right: -150px; background: white; animation-delay: 5s; }
-    @keyframes float { 
-      0%,100% { transform: translate(0,0);} 
-      50% { transform: translate(40px,20px);} 
+    /* Underlay: drifting radial haze + subtle moving scanlines */
+    .underlay {
+      position: fixed; inset: 0; z-index: -2; overflow: hidden;
+      background: radial-gradient(1200px 600px at 10% -20%, rgba(255,255,255,.04), transparent 60%),
+                  radial-gradient(800px 400px at 110% 10%, rgba(255,255,255,.035), transparent 60%),
+                  radial-gradient(900px 500px at 50% 120%, rgba(255,255,255,.03), transparent 60%),
+                  var(--bg);
+      animation: drift 30s linear infinite;
     }
+    @keyframes drift { 
+      0%   { background-position: 0 0, 0 0, 0 0; }
+      50%  { background-position: 20px -10px, -20px 15px, 10px -25px; }
+      100% { background-position: 0 0, 0 0, 0 0; }
+    }
+    .scanlines::before {
+      content:""; position: fixed; inset:0; z-index:-1; pointer-events:none;
+      background: repeating-linear-gradient(
+        to bottom, rgba(255,255,255,.02), rgba(255,255,255,.02) 1px, transparent 3px, transparent 6px
+      );
+      animation: slide 8s linear infinite;
+    }
+    @keyframes slide { 0% { transform: translateY(0);} 100% { transform: translateY(-6px);} }
 
-    .nav-link:hover { color: #aaa; }
-    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .7s, transform .7s; }
-    .reveal.show { opacity: 1; transform: translateY(0); }
+    /* Constellation SVG field */
+    .constellation {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .25;
+    }
+    .pulse { animation: pulse 3s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.35; transform:scale(1)} 50%{opacity:.8; transform:scale(1.04)} }
 
-    /* Animated bars (voice visualization) */
-    .bars { display:flex; gap:4px; margin-top:8px; }
-    .bar { width:5px; height:10px; background:#fff; border-radius:2px; animation: bounce 1.2s ease-in-out infinite; }
-    .bar:nth-child(2){ animation-delay:.1s;} .bar:nth-child(3){ animation-delay:.2s;}
-    .bar:nth-child(4){ animation-delay:.3s;} .bar:nth-child(5){ animation-delay:.4s;}
-    @keyframes bounce { 0%,100%{ height:8px } 50%{ height:32px } }
+    /* Minimal, white-only UI */
+    .btn {
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid #fff; color:#fff; background:transparent;
+      padding:.75rem 1rem; border-radius:.5rem; transition: all .2s ease;
+    }
+    .btn:hover { background: rgba(255,255,255,.06); }
+    .card {
+      border:1px solid rgba(255,255,255,.12); border-radius: .75rem; padding: 1.25rem 1.25rem;
+      background: rgba(255,255,255,.02);
+    }
+    .card:hover { background: rgba(255,255,255,.04); }
 
-    .card { background:#111; border:1px solid #222; border-radius:16px; padding:24px; }
+    /* Section reveal */
+    .reveal { opacity:0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity:1; transform: none; }
+
+    /* Simple divider */
+    .rule { height:1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); }
   </style>
 </head>
-<body>
-  <!-- NAV -->
-  <header class="sticky top-0 z-50 bg-black/80 backdrop-blur border-b border-neutral-800">
-    <div class="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-      <span class="font-bold text-white text-lg">Voice Agent Solutions</span>
-      <nav class="hidden md:flex gap-6 text-gray-300">
-        <a href="#features" class="nav-link">Features</a>
-        <a href="#industries" class="nav-link">Industries</a>
-        <a href="#demos" class="nav-link">Demo Models</a>
-        <a href="#pricing" class="nav-link">Pricing</a>
-        <a href="#how" class="nav-link">How It Works</a>
-        <a href="#faq" class="nav-link">FAQ</a>
-        <a href="#contact" class="nav-link">Contact</a>
+<body class="antialiased">
+  <!-- Animated underlay -->
+  <div class="underlay scanlines"></div>
+
+  <!-- Constellation SVG (monochrome, slow movement) -->
+  <svg class="constellation" viewBox="0 0 1200 800" preserveAspectRatio="none">
+    <g fill="none" stroke="white" stroke-opacity=".18" stroke-width="1">
+      <!-- grid -->
+      <path d="M0 100 H1200 M0 250 H1200 M0 400 H1200 M0 550 H1200 M0 700 H1200" />
+      <path d="M100 0 V800 M300 0 V800 M500 0 V800 M700 0 V800 M900 0 V800 M1100 0 V800" />
+      <!-- nodes -->
+      <g fill="white" stroke="none">
+        <circle class="pulse" cx="220" cy="180" r="2.2"/>
+        <circle class="pulse" cx="480" cy="120" r="2.2"/>
+        <circle class="pulse" cx="940" cy="210" r="2.2"/>
+        <circle class="pulse" cx="760" cy="460" r="2.2"/>
+        <circle class="pulse" cx="340" cy="520" r="2.2"/>
+        <circle class="pulse" cx="1040" cy="620" r="2.2"/>
+      </g>
+      <!-- connectors -->
+      <path d="M220 180 L340 520 L760 460 L940 210" />
+      <path d="M480 120 L700 320 L1040 620" />
+    </g>
+  </svg>
+
+  <!-- Header -->
+  <header class="sticky top-0 z-50 border-b border-white/10 backdrop-blur bg-black/70">
+    <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="https://carlylestraughn.github.io/voice-agent-site/logo.png" alt="Straughn Solutions" class="h-8 w-auto" />
+        <span class="sr-only">Straughn Solutions</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#voice" class="hover:opacity-80">Voice Agents</a>
+        <a href="#soon" class="hover:opacity-80">Coming Soon</a>
+        <a href="#contact" class="hover:opacity-80">Contact</a>
       </nav>
     </div>
   </header>
 
-  <!-- HERO -->
-  <section id="home" class="relative overflow-hidden py-28 text-center">
-    <div class="blob blob-1"></div>
-    <div class="blob blob-2"></div>
-    <h1 class="text-5xl md:text-6xl font-extrabold relative z-10">AI Voice Agents that <br><span class="text-gray-300">answer, qualify, and book — 24/7</span></h1>
-    <p class="mt-6 text-lg text-gray-400 relative z-10 max-w-2xl mx-auto">
-      Reduce missed calls and manual scheduling. Our natural-sounding voice agents handle real conversations, check your calendar, and book appointments automatically.
+  <!-- Hero -->
+  <section id="voice" class="max-w-6xl mx-auto px-5 pt-20 pb-10">
+    <h1 class="text-4xl md:text-6xl font-semibold tracking-tight reveal">
+      AI Voice Agents for real calls. <br class="hidden md:block"/>
+      White-label. Reliable. Always on.
+    </h1>
+    <p class="mt-5 text-lg text-gray-300 max-w-2xl reveal">
+      We build phone agents that answer, qualify, and book—without hold music or missed calls.
+      Natural turn-taking, calendar awareness, and clean hand-offs to your team.
     </p>
-    <div class="mt-8 flex justify-center gap-4 relative z-10">
-      <a href="#demos" class="px-6 py-3 bg-white text-black font-semibold rounded-lg">Try the Demos</a>
-      <a href="#contact" class="px-6 py-3 border border-gray-600 rounded-lg">Book a Consult</a>
+    <div class="mt-8 flex flex-wrap gap-3 reveal">
+      <a href="#contact" class="btn">Book a consult</a>
+      <a href="#features" class="btn">How it works</a>
     </div>
   </section>
 
-  <!-- FEATURES -->
-  <section id="features" class="py-20 max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Features</h2>
-    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="card"><h3 class="font-semibold text-lg">Natural Voice</h3><p class="text-gray-400 mt-2">Human-like conversations with turn-taking, clarifications, and confirmations.</p></div>
-      <div class="card"><h3 class="font-semibold text-lg">Smart Scheduling</h3><p class="text-gray-400 mt-2">Checks calendar availability and books within your business rules.</p></div>
-      <div class="card"><h3 class="font-semibold text-lg">Lead Intake</h3><p class="text-gray-400 mt-2">Collects names, contact info, preferences, and reasons for calling.</p></div>
-      <div class="card"><h3 class="font-semibold text-lg">Integrations</h3><p class="text-gray-400 mt-2">Google Calendar, Outlook, webhooks, and more.</p></div>
-      <div class="card"><h3 class="font-semibold text-lg">Analytics & Logs</h3><p class="text-gray-400 mt-2">See call transcripts, outcomes, and booking summaries.</p></div>
-      <div class="card"><h3 class="font-semibold text-lg">Custom Prompts</h3><p class="text-gray-400 mt-2">Tailored dialogues and guardrails for your industry and workflow.</p></div>
+  <!-- Minimal feature points -->
+  <section id="features" class="max-w-6xl mx-auto px-5 py-8">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="card reveal">
+        <!-- Mic SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <rect x="8" y="3" width="8" height="12" rx="4" stroke="#fff" />
+          <path d="M5 11v1a7 7 0 0 0 14 0v-1" stroke="#fff"/>
+          <path d="M12 18v3" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Natural conversations</h3>
+        <p class="text-sm text-gray-300 mt-2">Understands intent, clarifies politely, and waits—no talking over the caller.</p>
+      </div>
+      <div class="card reveal">
+        <!-- Calendar SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <rect x="3" y="5" width="18" height="16" rx="2" stroke="#fff"/>
+          <path d="M3 9h18M8 3v4M16 3v4" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Calendar aware</h3>
+        <p class="text-sm text-gray-300 mt-2">Checks availability and books 30-min slots. Confirms details in plain language.</p>
+      </div>
+      <div class="card reveal">
+        <!-- Shield SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Guardrails built-in</h3>
+        <p class="text-sm text-gray-300 mt-2">No pricing, no advice—just intake and scheduling within your rules.</p>
+      </div>
     </div>
   </section>
 
-  <!-- INDUSTRIES -->
-  <section id="industries" class="py-20 max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Industries We Serve</h2>
-    <div class="grid md:grid-cols-4 gap-6">
-      <div class="card"><h3 class="font-semibold">Healthcare</h3><p class="text-gray-400 mt-2">Book patient visits, manage prep instructions.</p></div>
-      <div class="card"><h3 class="font-semibold">Legal</h3><p class="text-gray-400 mt-2">Qualify cases and schedule intakes.</p></div>
-      <div class="card"><h3 class="font-semibold">Real Estate</h3><p class="text-gray-400 mt-2">Capture leads and book consults.</p></div>
-      <div class="card"><h3 class="font-semibold">Auto Repair</h3><p class="text-gray-400 mt-2">Service intake and vehicle details.</p></div>
+  <div class="max-w-6xl mx-auto px-5 my-12 rule"></div>
+
+  <!-- Coming Soon -->
+  <section id="soon" class="max-w-6xl mx-auto px-5 pb-8">
+    <h2 class="text-2xl font-semibold reveal">Coming Soon</h2>
+    <div class="grid md:grid-cols-2 gap-4 mt-6">
+      <div class="card reveal">
+        <!-- Flow SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <circle cx="6" cy="6" r="2.5" stroke="#fff"/>
+          <circle cx="18" cy="6" r="2.5" stroke="#fff"/>
+          <circle cx="12" cy="18" r="2.5" stroke="#fff"/>
+          <path d="M8.5 6H15.5M12 8.5V15.5" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Automations</h3>
+        <p class="text-sm text-gray-300 mt-2">Trigger follow-ups, CRM updates, and summaries automatically after each call.</p>
+        <p class="text-xs text-gray-400 mt-3">Launch target: November 2025</p>
+      </div>
+      <div class="card reveal">
+        <!-- Layout SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <rect x="3" y="3" width="8" height="8" stroke="#fff"/>
+          <rect x="13" y="3" width="8" height="18" stroke="#fff"/>
+          <rect x="3" y="13" width="8" height="8" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Web Design</h3>
+        <p class="text-sm text-gray-300 mt-2">Sleek, performance-focused sites that pair perfectly with your voice agent.</p>
+        <p class="text-xs text-gray-400 mt-3">Launch target: November 2025</p>
+      </div>
     </div>
   </section>
 
-  <!-- DEMOS -->
-  <section id="demos" class="py-20 max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Demo Models</h2>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <div class="card"><h3 class="font-semibold">Speedy Auto & Oil</h3><p class="text-gray-400">Phone: TBD</p></div>
-      <div class="card"><h3 class="font-semibold">Clara Homes (Real Estate)</h3><p class="text-gray-400">Phone: TBD</p></div>
-      <div class="card"><h3 class="font-semibold">Crane, Poole & Schmidt (Legal)</h3><p class="text-gray-400">Phone: TBD</p></div>
-      <div class="card"><h3 class="font-semibold">Smile Studio Dental</h3><p class="text-gray-400">Phone: TBD</p></div>
-      <div class="card"><h3 class="font-semibold">Newport Coast Urgent Care</h3><p class="text-gray-400">Phone: TBD</p></div>
+  <div class="max-w-6xl mx-auto px-5 my-12 rule"></div>
+
+  <!-- Contact -->
+  <section id="contact" class="max-w-6xl mx-auto px-5 pb-20">
+    <div class="grid md:grid-cols-[1.1fr,.9fr] gap-6">
+      <div class="reveal">
+        <h2 class="text-2xl font-semibold">Start a project</h2>
+        <p class="text-gray-300 mt-2 max-w-xl">
+          Tell us your use case and we’ll propose a minimal, production-ready agent with clear milestones.
+        </p>
+        <a href="mailto:carlyle.straughn@gmail.com" class="btn mt-6">carlyle.straughn@gmail.com</a>
+      </div>
+      <form class="card reveal" onsubmit="event.preventDefault(); this.reset(); alert('Thanks! We\'ll be in touch.');">
+        <label class="text-sm text-gray-300">Name</label>
+        <input class="mt-1 mb-3 w-full bg-black text-white border border-white/20 rounded-md px-3 py-2 focus:outline-none focus:border-white/40" required>
+        <label class="text-sm text-gray-300">Email</label>
+        <input type="email" class="mt-1 mb-3 w-full bg-black text-white border border-white/20 rounded-md px-3 py-2 focus:outline-none focus:border-white/40" required>
+        <label class="text-sm text-gray-300">What do you need?</label>
+        <textarea rows="4" class="mt-1 w-full bg-black text-white border border-white/20 rounded-md px-3 py-2 focus:outline-none focus:border-white/40" placeholder="Voice agent for…"></textarea>
+        <button class="btn mt-4 w-full">Send</button>
+      </form>
     </div>
   </section>
 
-  <!-- PRICING -->
-  <section id="pricing" class="py-20 max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">Simple Pricing</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="card"><h3 class="text-xl font-semibold">Basic</h3><p class="text-2xl mt-2">$200/mo</p><ul class="mt-3 text-gray-400 list-disc list-inside"><li>Up to 1,000 minutes</li><li>One assistant + one calendar</li><li>Email summaries</li></ul></div>
-      <div class="card"><h3 class="text-xl font-semibold">Premium</h3><p class="text-2xl mt-2">$400/mo</p><ul class="mt-3 text-gray-400 list-disc list-inside"><li>Up to 2,500 minutes</li><li>Multiple assistants & calendars</li><li>Priority support</li></ul></div>
-    </div>
-    <p class="text-center text-gray-500 mt-6 text-sm">Overages billed at cost + margin. One-time setup $2,000.</p>
-  </section>
-
-  <!-- HOW IT WORKS -->
-  <section id="how" class="py-20 max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">How It Works</h2>
-    <div class="grid md:grid-cols-3 gap-6">
-      <div class="card"><h3 class="font-semibold">1. Configure</h3><p class="text-gray-400 mt-2">We tailor prompts, voice, and rules to your business.</p></div>
-      <div class="card"><h3 class="font-semibold">2. Integrate</h3><p class="text-gray-400 mt-2">Connect calendars, CRMs, or automations.</p></div>
-      <div class="card"><h3 class="font-semibold">3. Launch</h3><p class="text-gray-400 mt-2">Forward your phone or embed a web widget and go live.</p></div>
-    </div>
-  </section>
-
-  <!-- FAQ -->
-  <section id="faq" class="py-20 max-w-6xl mx-auto px-6">
-    <h2 class="text-3xl font-bold text-center mb-12">FAQ</h2>
-    <div class="grid md:grid-cols-2 gap-6">
-      <div class="card"><h3 class="font-semibold">Can the agent book on my calendar?</h3><p class="text-gray-400 mt-2">Yes, we integrate with Google and Outlook calendars for availability checks and booking.</p></div>
-      <div class="card"><h3 class="font-semibold">Will it work for my industry?</h3><p class="text-gray-400 mt-2">We have templates for healthcare, legal, real estate, and auto—plus custom builds.</p></div>
-      <div class="card"><h3 class="font-semibold">How do demos work?</h3><p class="text-gray-400 mt-2">Call the numbers in the Demo Models section (coming soon) to try each assistant.</p></div>
-      <div class="card"><h3 class="font-semibold">What about SMS?</h3><p class="text-gray-400 mt-2">We can add SMS confirmations if needed via integrations.</p></div>
-    </div>
-  </section>
-
-  <!-- CONTACT -->
-  <section id="contact" class="py-20 max-w-3xl mx-auto px-6 text-center">
-    <h2 class="text-3xl font-bold mb-6">Let’s Build Your Assistant</h2>
-    <p class="text-gray-400">Tell us about your use case and we’ll follow up with a tailored plan.</p>
-    <form class="mt-8 grid gap-4 text-left">
-      <input class="w-full rounded-lg bg-black border border-gray-700 p-3" type="text" placeholder="Your Name" required />
-      <input class="w-full rounded-lg bg-black border border-gray-700 p-3" type="email" placeholder="Your Email" required />
-      <textarea class="w-full rounded-lg bg-black border border-gray-700 p-3" rows="4" placeholder="What type of assistant are you looking for?"></textarea>
-      <button type="submit" class="px-6 py-3 bg-white text-black rounded-lg font-semibold">Submit Inquiry</button>
-    </form>
-    <p class="mt-6 text-gray-400">Prefer email? <a class="underline" href="mailto:carlyle.straughn@gmail.com">carlyle.straughn@gmail.com</a></p>
-  </section>
-
-  <footer class="py-6 text-center text-gray-600 text-sm border-t border-neutral-800">
-    &copy; 2025 Voice Agent Solutions. All rights reserved.
+  <footer class="border-t border-white/10 py-8 text-center text-gray-400 text-sm">
+    © 2025 Straughn Solutions. All rights reserved.
   </footer>
 
   <script>
     // Reveal on scroll
-    const observer = new IntersectionObserver((entries)=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('show')})},{threshold:0.1});
-    document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 </body>
 </html>
