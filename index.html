@@ -2,396 +2,232 @@
 <html lang="en">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>STRAUGHN SOLUTIONS — AI • Web • Apps • Automations</title>
-  <meta name="description" content="Straughn Solutions builds AI voice agents, premium web & app design, and automations that scale your business." />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Straughn Solutions — Voice Agents</title>
+  <meta name="description" content="AI voice agents that answer calls, qualify leads, and book appointments." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
-
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    :root{
-      --bg:#0a0a0a;        /* page background (near-black) */
-      --panel:#0f0f10;     /* card/bg panels */
-      --ink:#ffffff;       /* primary text */
-      --muted:#a7a8ad;     /* secondary text */
-      --brand:#6ee7ff;     /* accent (cyanish) */
-      --brand-2:#9d7dff;   /* accent (violet) */
-      --grid:#1a1b1f;      /* grid lines */
-      --ring: 0 0 0 3px rgba(110,231,255,.25);
+    :root {
+      --bg: #000;         /* pure black */
+      --ink: #fff;        /* pure white */
+      --ink-2: #d1d5db;   /* light gray for secondary */
+      --ink-3: #9ca3af;   /* mid gray */
     }
-
-    html { scroll-behavior:smooth; }
+    html { scroll-behavior: smooth; }
     body {
-      margin:0; color:var(--ink); background:var(--bg);
-      font-family: Outfit, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      line-height:1.45;
+      font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
     }
+    /* Underlay: drifting radial haze + subtle moving scanlines */
+    .underlay {
+      position: fixed; inset: 0; z-index: -2; overflow: hidden;
+      background: radial-gradient(1200px 600px at 10% -20%, rgba(255,255,255,.04), transparent 60%),
+                  radial-gradient(800px 400px at 110% 10%, rgba(255,255,255,.035), transparent 60%),
+                  radial-gradient(900px 500px at 50% 120%, rgba(255,255,255,.03), transparent 60%),
+                  var(--bg);
+      animation: drift 30s linear infinite;
+    }
+    @keyframes drift { 
+      0%   { background-position: 0 0, 0 0, 0 0; }
+      50%  { background-position: 20px -10px, -20px 15px, 10px -25px; }
+      100% { background-position: 0 0, 0 0, 0 0; }
+    }
+    .scanlines::before {
+      content:""; position: fixed; inset:0; z-index:-1; pointer-events:none;
+      background: repeating-linear-gradient(
+        to bottom, rgba(255,255,255,.02), rgba(255,255,255,.02) 1px, transparent 3px, transparent 6px
+      );
+      animation: slide 8s linear infinite;
+    }
+    @keyframes slide { 0% { transform: translateY(0);} 100% { transform: translateY(-6px);} }
 
-    /* --- Layout helpers --- */
-    .container { width:100%; max-width:1200px; margin:0 auto; padding:0 20px; }
-    .row { display:grid; gap:28px; }
-    @media(min-width:900px){ .row.cols-2{ grid-template-columns: 1.1fr .9fr; } }
-    @media(min-width:900px){ .grid-3{ display:grid; grid-template-columns:repeat(3,1fr); gap:22px; } }
-    @media(min-width:900px){ .grid-4{ display:grid; grid-template-columns:repeat(4,1fr); gap:22px; } }
+    /* Constellation SVG field */
+    .constellation {
+      position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: .25;
+    }
+    .pulse { animation: pulse 3s ease-in-out infinite; }
+    @keyframes pulse { 0%,100%{opacity:.35; transform:scale(1)} 50%{opacity:.8; transform:scale(1.04)} }
 
-    /* --- Header / Nav --- */
-    header {
-      position:sticky; top:0; z-index:50;
-      backdrop-filter:saturate(140%) blur(10px);
-      background:linear-gradient(180deg, rgba(10,10,10,.85), rgba(10,10,10,.55));
-      border-bottom:1px solid #151515;
-    }
-    .nav { display:flex; align-items:center; justify-content:space-between; padding:14px 0; }
-    .brand { display:flex; align-items:center; gap:14px; text-decoration:none; color:var(--ink); }
-    .brand img { height:40px; width:auto; display:block; }
-    .brand span { font-weight:800; letter-spacing:.06em; font-size:18px; }
-    .links a{
-      color:var(--muted); text-decoration:none; margin:0 12px; font-weight:600; letter-spacing:.02em;
-    }
-    .links a:hover, .links a.active { color:var(--ink); }
-    .menu-btn{ display:none; background:#141414; border:1px solid #1e1e1e; color:#eaeaea; padding:10px 12px; border-radius:10px; }
-    @media(max-width:900px){
-      .links{ display:none; }
-      .menu-btn{ display:inline-flex; }
-      #mobile { display:none; border-top:1px solid #161616; padding:10px 0 14px; }
-      #mobile a{ display:block; padding:10px 8px; color:var(--muted); text-decoration:none; }
-      #mobile a:hover{ color:var(--ink); }
-    }
-
-    /* --- Hero --- */
-    .hero {
-      position:relative; overflow:hidden;
-      padding:110px 0 90px;
-      background:
-        radial-gradient(900px 420px at 10% -20%, rgba(157,125,255,.18), transparent 60%),
-        radial-gradient(900px 520px at 110% 10%, rgba(110,231,255,.12), transparent 60%);
-      border-bottom:1px solid #141414;
-    }
-    .headline {
-      font-weight:900; font-size: clamp(36px, 6vw, 64px);
-      line-height:1.04; letter-spacing:.02em;
-    }
-    .sub { color:var(--muted); max-width:56ch; margin-top:14px; font-size:18px; }
-    .cta { display:flex; flex-wrap:wrap; gap:12px; margin-top:26px; }
+    /* Minimal, white-only UI */
     .btn {
-      appearance:none; border:0; border-radius:14px; cursor:pointer;
-      padding:14px 18px; font-weight:800; letter-spacing:.02em;
-      color:#050505; background:linear-gradient(90deg, var(--brand), var(--brand-2));
-      box-shadow:0 10px 38px rgba(110,231,255,.12);
+      display:inline-flex; align-items:center; justify-content:center;
+      border:1px solid #fff; color:#fff; background:transparent;
+      padding:.75rem 1rem; border-radius:.5rem; transition: all .2s ease;
     }
-    .btn:hover{ filter:saturate(110%); transform:translateY(-1px); }
-    .btn-outline{
-      background:transparent; color:var(--ink); border:1px solid #2a2a2e; box-shadow:none;
+    .btn:hover { background: rgba(255,255,255,.06); }
+    .card {
+      border:1px solid rgba(255,255,255,.12); border-radius: .75rem; padding: 1.25rem 1.25rem;
+      background: rgba(255,255,255,.02);
     }
-    .btn-outline:hover{ border-color:#3a3a43; box-shadow: var(--ring); }
+    .card:hover { background: rgba(255,255,255,.04); }
 
-    /* --- Moving SVG background (hero) --- */
-    .grid-bg{
-      position:absolute; inset:0; z-index:-1;
-      background-image:
-        linear-gradient(to right, var(--grid) 1px, transparent 1px),
-        linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
-      background-size:46px 46px;
-      mask-image: radial-gradient(1200px 500px at 50% -10%, #000 60%, transparent 100%);
-    }
-    .orbits{
-      position:absolute; inset:0; pointer-events:none; mix-blend-mode:screen; opacity:.35;
-    }
-    .orbits svg{ width:120%; transform:translate(-10%, -10%); animation: drift 24s linear infinite; }
-    @keyframes drift{ to{ transform: translate(-10%,-10%) rotate(360deg);} }
+    /* Section reveal */
+    .reveal { opacity:0; transform: translateY(12px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.show { opacity:1; transform: none; }
 
-    /* --- Sections --- */
-    section { padding:84px 0; }
-    h2 { font-size:30px; font-weight:900; letter-spacing:.02em; margin:0 0 14px; }
-    p.lead { color:var(--muted); margin:0 0 26px; }
-
-    /* --- Service cards --- */
-    .card{
-      background:linear-gradient(180deg, rgba(255,255,255,.02), rgba(255,255,255,.00));
-      border:1px solid #1a1a1d; border-radius:16px; padding:20px; position:relative;
-      transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
-    }
-    .card:hover{ transform:translateY(-3px); border-color:#26262b; box-shadow: 0 14px 48px rgba(110,231,255,.08); }
-    .icon{
-      width:42px; height:42px; border-radius:10px;
-      background:linear-gradient(135deg, rgba(110,231,255,.16), rgba(157,125,255,.10));
-      display:inline-flex; align-items:center; justify-content:center; margin-bottom:10px;
-      border:1px solid #1f1f22;
-    }
-    .card h3{ margin:.2rem 0 .3rem; font-size:18px; letter-spacing:.02em; }
-    .card p{ color:var(--muted); margin:0; }
-
-    /* --- Process --- */
-    .step { display:flex; gap:14px; align-items:flex-start; }
-    .badge{
-      min-width:34px; height:34px; border-radius:999px; display:inline-flex; align-items:center; justify-content:center;
-      background:linear-gradient(180deg, rgba(110,231,255,.16), rgba(157,125,255,.10));
-      border:1px solid #222228; color:#e7faff; font-weight:800;
-    }
-
-    /* --- Footer --- */
-    footer { border-top:1px solid #121214; color:#8f9097; }
-
-    /* --- Utilities --- */
-    .muted { color:var(--muted); }
-    .center { text-align:center; }
-    .spacer-s { height:10px; }
+    /* Simple divider */
+    .rule { height:1px; background: linear-gradient(90deg, transparent, rgba(255,255,255,.18), transparent); }
   </style>
 </head>
-<body>
+<body class="antialiased">
+  <!-- Animated underlay -->
+  <div class="underlay scanlines"></div>
+
+  <!-- Constellation SVG (monochrome, slow movement) -->
+  <svg class="constellation" viewBox="0 0 1200 800" preserveAspectRatio="none">
+    <g fill="none" stroke="white" stroke-opacity=".18" stroke-width="1">
+      <!-- grid -->
+      <path d="M0 100 H1200 M0 250 H1200 M0 400 H1200 M0 550 H1200 M0 700 H1200" />
+      <path d="M100 0 V800 M300 0 V800 M500 0 V800 M700 0 V800 M900 0 V800 M1100 0 V800" />
+      <!-- nodes -->
+      <g fill="white" stroke="none">
+        <circle class="pulse" cx="220" cy="180" r="2.2"/>
+        <circle class="pulse" cx="480" cy="120" r="2.2"/>
+        <circle class="pulse" cx="940" cy="210" r="2.2"/>
+        <circle class="pulse" cx="760" cy="460" r="2.2"/>
+        <circle class="pulse" cx="340" cy="520" r="2.2"/>
+        <circle class="pulse" cx="1040" cy="620" r="2.2"/>
+      </g>
+      <!-- connectors -->
+      <path d="M220 180 L340 520 L760 460 L940 210" />
+      <path d="M480 120 L700 320 L1040 620" />
+    </g>
+  </svg>
 
   <!-- Header -->
-  <header>
-    <div class="container nav">
-      <a class="brand" href="#home">
-        <!-- Replace src with your path (e.g., assets/logo.png) -->
-        <img src="assets/logo.png" alt="STRAUGHN SOLUTIONS logo" />
-        <span>STRAUGHN&nbsp;SOLUTIONS</span>
-      </a>
-
-      <nav class="links" id="links">
-        <a href="#services">Services</a>
-        <a href="#work">Work</a>
-        <a href="#process">Process</a>
-        <a href="#contact">Contact</a>
+  <header class="sticky top-0 z-50 border-b border-white/10 backdrop-blur bg-black/70">
+    <div class="max-w-6xl mx-auto px-5 py-4 flex items-center justify-between">
+      <div class="flex items-center gap-3">
+        <img src="https://carlylestraughn.github.io/voice-agent-site/logo.png" alt="Straughn Solutions" class="h-8 w-auto" />
+        <span class="sr-only">Straughn Solutions</span>
+      </div>
+      <nav class="hidden md:flex items-center gap-6 text-sm">
+        <a href="#voice" class="hover:opacity-80">Voice Agents</a>
+        <a href="#soon" class="hover:opacity-80">Coming Soon</a>
+        <a href="#contact" class="hover:opacity-80">Contact</a>
       </nav>
-
-      <button class="menu-btn" id="menuBtn">Menu</button>
-    </div>
-    <div id="mobile" class="container">
-      <a href="#services">Services</a>
-      <a href="#work">Work</a>
-      <a href="#process">Process</a>
-      <a href="#contact">Contact</a>
     </div>
   </header>
 
   <!-- Hero -->
-  <section class="hero" id="home">
-    <div class="grid-bg"></div>
-    <div class="orbits">
-      <!-- subtle moving concentric orbits -->
-      <svg viewBox="0 0 800 800" fill="none">
-        <g stroke="url(#g1)" stroke-width="1">
-          <circle cx="400" cy="400" r="160"></circle>
-          <circle cx="400" cy="400" r="260"></circle>
-          <circle cx="400" cy="400" r="360"></circle>
-        </g>
-        <defs>
-          <linearGradient id="g1" x1="0" y1="0" x2="800" y2="800">
-            <stop offset="0%" stop-color="#6ee7ff"/>
-            <stop offset="100%" stop-color="#9d7dff"/>
-          </linearGradient>
-        </defs>
-      </svg>
+  <section id="voice" class="max-w-6xl mx-auto px-5 pt-20 pb-10">
+    <h1 class="text-4xl md:text-6xl font-semibold tracking-tight reveal">
+      AI Voice Agents for real calls. <br class="hidden md:block"/>
+      White-label. Reliable. Always on.
+    </h1>
+    <p class="mt-5 text-lg text-gray-300 max-w-2xl reveal">
+      We build phone agents that answer, qualify, and book—without hold music or missed calls.
+      Natural turn-taking, calendar awareness, and clean hand-offs to your team.
+    </p>
+    <div class="mt-8 flex flex-wrap gap-3 reveal">
+      <a href="#contact" class="btn">Book a consult</a>
+      <a href="#features" class="btn">How it works</a>
     </div>
+  </section>
 
-    <div class="container row cols-2">
-      <div>
-        <h1 class="headline">FUTURE-FORWARD <span style="background:linear-gradient(90deg,#6ee7ff,#9d7dff);-webkit-background-clip:text;background-clip:text;color:transparent;">SOFTWARE & AI</span> THAT SHIPS</h1>
-        <p class="sub">We design and deploy production-grade **AI voice assistants**, premium **web design**, elegant **app design**, and **automations** that remove busywork. Built fast. Built right.</p>
-        <div class="cta">
-          <a class="btn" href="#contact">Start a Project</a>
-          <a class="btn btn-outline" href="#services">Explore Services</a>
-        </div>
+  <!-- Minimal feature points -->
+  <section id="features" class="max-w-6xl mx-auto px-5 py-8">
+    <div class="grid md:grid-cols-3 gap-4">
+      <div class="card reveal">
+        <!-- Mic SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <rect x="8" y="3" width="8" height="12" rx="4" stroke="#fff" />
+          <path d="M5 11v1a7 7 0 0 0 14 0v-1" stroke="#fff"/>
+          <path d="M12 18v3" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Natural conversations</h3>
+        <p class="text-sm text-gray-300 mt-2">Understands intent, clarifies politely, and waits—no talking over the caller.</p>
       </div>
-      <div>
-        <!-- Hero device mock / animated waveform -->
-        <div class="card" style="padding:22px 22px 18px;">
-          <div class="icon" aria-hidden="true">
-            <!-- phone icon -->
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M6 8v8M18 8v8M9 5h6a3 3 0 013 3v8a3 3 0 01-3 3H9a3 3 0 01-3-3V8a3 3 0 013-3Z" stroke="#9d7dff" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <h3 style="margin:6px 0 8px;">AI Voice — Live Call Visual</h3>
-          <p class="muted">Agent: “Thanks for calling Straughn Solutions, how can I help?”</p>
-          <div class="spacer-s"></div>
-          <div style="display:flex;gap:6px;align-items:flex-end;height:42px;">
-            <span style="width:6px;background:linear-gradient(180deg,#6ee7ff,#9d7dff);height:10px;border-radius:3px;animation:b 1.2s ease-in-out infinite;"></span>
-            <span style="width:6px;background:linear-gradient(180deg,#6ee7ff,#9d7dff);height:20px;border-radius:3px;animation:b 1.2s .1s infinite;"></span>
-            <span style="width:6px;background:linear-gradient(180deg,#6ee7ff,#9d7dff);height:34px;border-radius:3px;animation:b 1.2s .2s infinite;"></span>
-            <span style="width:6px;background:linear-gradient(180deg,#6ee7ff,#9d7dff);height:22px;border-radius:3px;animation:b 1.2s .3s infinite;"></span>
-            <span style="width:6px;background:linear-gradient(180deg,#6ee7ff,#9d7dff);height:14px;border-radius:3px;animation:b 1.2s .4s infinite;"></span>
-          </div>
-        </div>
+      <div class="card reveal">
+        <!-- Calendar SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <rect x="3" y="5" width="18" height="16" rx="2" stroke="#fff"/>
+          <path d="M3 9h18M8 3v4M16 3v4" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Calendar aware</h3>
+        <p class="text-sm text-gray-300 mt-2">Checks availability and books 30-min slots. Confirms details in plain language.</p>
+      </div>
+      <div class="card reveal">
+        <!-- Shield SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <path d="M12 3l8 4v5c0 5-3.5 8.5-8 9-4.5-.5-8-4-8-9V7l8-4z" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Guardrails built-in</h3>
+        <p class="text-sm text-gray-300 mt-2">No pricing, no advice—just intake and scheduling within your rules.</p>
       </div>
     </div>
   </section>
 
-  <!-- Services -->
-  <section id="services">
-    <div class="container">
-      <h2>Services</h2>
-      <p class="lead">Focused, senior execution across four pillars.</p>
+  <div class="max-w-6xl mx-auto px-5 my-12 rule"></div>
 
-      <div class="grid-4">
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M3 8h18M7 4h10M7 20h10M3 16h18" stroke="#6ee7ff" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>AI Voice Assistants</h3>
-          <p>Natural conversations that answer calls, qualify leads, and book directly on your calendar.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="3" y="4" width="18" height="14" rx="2" stroke="#6ee7ff" stroke-width="1.6"/>
-              <path d="M3 9h18" stroke="#9d7dff" stroke-width="1.6"/>
-            </svg>
-          </div>
-          <h3>Web Design</h3>
-          <p>High-performance marketing sites and product pages with motion, accessibility, and speed baked in.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <rect x="7" y="2" width="10" height="20" rx="3" stroke="#9d7dff" stroke-width="1.6"/>
-              <circle cx="12" cy="18" r="1.2" fill="#6ee7ff"/>
-            </svg>
-          </div>
-          <h3>App Design</h3>
-          <p>Mobile and desktop app UX that’s clean, intuitive, and engineered for conversion & retention.</p>
-        </div>
-
-        <div class="card">
-          <div class="icon" aria-hidden="true">
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-              <path d="M4 6h8l2 3h6v10H4V6z" stroke="#6ee7ff" stroke-width="1.6"/>
-              <path d="M8 12h8M8 16h5" stroke="#9d7dff" stroke-width="1.6" stroke-linecap="round"/>
-            </svg>
-          </div>
-          <h3>AI Automation</h3>
-          <p>Workflows that eliminate repetitive tasks: data syncs, notifications, CRM updates, and more.</p>
-        </div>
+  <!-- Coming Soon -->
+  <section id="soon" class="max-w-6xl mx-auto px-5 pb-8">
+    <h2 class="text-2xl font-semibold reveal">Coming Soon</h2>
+    <div class="grid md:grid-cols-2 gap-4 mt-6">
+      <div class="card reveal">
+        <!-- Flow SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <circle cx="6" cy="6" r="2.5" stroke="#fff"/>
+          <circle cx="18" cy="6" r="2.5" stroke="#fff"/>
+          <circle cx="12" cy="18" r="2.5" stroke="#fff"/>
+          <path d="M8.5 6H15.5M12 8.5V15.5" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Automations</h3>
+        <p class="text-sm text-gray-300 mt-2">Trigger follow-ups, CRM updates, and summaries automatically after each call.</p>
+        <p class="text-xs text-gray-400 mt-3">Launch target: November 2025</p>
+      </div>
+      <div class="card reveal">
+        <!-- Layout SVG -->
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="mb-3">
+          <rect x="3" y="3" width="8" height="8" stroke="#fff"/>
+          <rect x="13" y="3" width="8" height="18" stroke="#fff"/>
+          <rect x="3" y="13" width="8" height="8" stroke="#fff"/>
+        </svg>
+        <h3 class="font-semibold">Web Design</h3>
+        <p class="text-sm text-gray-300 mt-2">Sleek, performance-focused sites that pair perfectly with your voice agent.</p>
+        <p class="text-xs text-gray-400 mt-3">Launch target: November 2025</p>
       </div>
     </div>
   </section>
 
-  <!-- Selected Work (placeholder) -->
-  <section id="work">
-    <div class="container">
-      <h2>Selected Work</h2>
-      <p class="lead">A quick look at what we ship. (Full case studies on request.)</p>
-
-      <div class="grid-3">
-        <div class="card">
-          <h3>Healthcare Voice Agent</h3>
-          <p class="muted">HIPAA-aware intake + scheduling, 22% faster bookings.</p>
-        </div>
-        <div class="card">
-          <h3>Fintech Marketing Site</h3>
-          <p class="muted">2.4s LCP, +38% demo requests after relaunch.</p>
-        </div>
-        <div class="card">
-          <h3>Ops Automation</h3>
-          <p class="muted">Reduced weekly manual work by ~18 hours via workflow bots.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Process -->
-  <section id="process">
-    <div class="container">
-      <h2>Process</h2>
-      <p class="lead">Tight loops. Senior execution. Ship value fast.</p>
-
-      <div class="row">
-        <div class="step">
-          <div class="badge">1</div>
-          <div>
-            <strong>Discover</strong>
-            <p class="muted">Goals, constraints, success metrics. We propose a crisp plan within 48–72 hours.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="badge">2</div>
-          <div>
-            <strong>Design</strong>
-            <p class="muted">Wireframes → polished UI, motion, and voice flows. Approvals happen quickly.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="badge">3</div>
-          <div>
-            <strong>Build</strong>
-            <p class="muted">Implement, integrate, and QA. We demo often and cut scope ruthlessly to ship.</p>
-          </div>
-        </div>
-        <div class="step">
-          <div class="badge">4</div>
-          <div>
-            <strong>Launch & Iterate</strong>
-            <p class="muted">Go live, measure, and refine. Ongoing retainers available for growth.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+  <div class="max-w-6xl mx-auto px-5 my-12 rule"></div>
 
   <!-- Contact -->
-  <section id="contact">
-    <div class="container row cols-2">
-      <div>
-        <h2>Let’s Build</h2>
-        <p class="lead">Tell us about your product or growth goal. We’ll reply with next steps and a clear timeline.</p>
-        <p class="muted">Email: <a href="mailto:carlyle.straughn@gmail.com" style="color:#6ee7ff;">carlyle.straughn@gmail.com</a></p>
+  <section id="contact" class="max-w-6xl mx-auto px-5 pb-20">
+    <div class="grid md:grid-cols-[1.1fr,.9fr] gap-6">
+      <div class="reveal">
+        <h2 class="text-2xl font-semibold">Start a project</h2>
+        <p class="text-gray-300 mt-2 max-w-xl">
+          Tell us your use case and we’ll propose a minimal, production-ready agent with clear milestones.
+        </p>
+        <a href="mailto:carlyle.straughn@gmail.com" class="btn mt-6">carlyle.straughn@gmail.com</a>
       </div>
-
-      <form class="card" action="https://formspree.io/f/your-id" method="POST">
-        <label>Name<br/><input name="name" required placeholder="Your name" style="margin-top:6px;width:100%;padding:12px;border-radius:10px;border:1px solid #222328;background:#0e0e10;color:#fff;"></label>
-        <div style="height:10px"></div>
-        <label>Email<br/><input name="email" type="email" required placeholder="you@company.com" style="margin-top:6px;width:100%;padding:12px;border-radius:10px;border:1px solid #222328;background:#0e0e10;color:#fff;"></label>
-        <div style="height:10px"></div>
-        <label>What are you building?<br/>
-          <textarea name="message" rows="5" placeholder="Voice agent for support… new marketing site… automate XYZ…" style="margin-top:6px;width:100%;padding:12px;border-radius:10px;border:1px solid #222328;background:#0e0e10;color:#fff;"></textarea>
-        </label>
-        <div style="height:12px"></div>
-        <button class="btn" type="submit">Send Inquiry</button>
+      <form class="card reveal" onsubmit="event.preventDefault(); this.reset(); alert('Thanks! We\'ll be in touch.');">
+        <label class="text-sm text-gray-300">Name</label>
+        <input class="mt-1 mb-3 w-full bg-black text-white border border-white/20 rounded-md px-3 py-2 focus:outline-none focus:border-white/40" required>
+        <label class="text-sm text-gray-300">Email</label>
+        <input type="email" class="mt-1 mb-3 w-full bg-black text-white border border-white/20 rounded-md px-3 py-2 focus:outline-none focus:border-white/40" required>
+        <label class="text-sm text-gray-300">What do you need?</label>
+        <textarea rows="4" class="mt-1 w-full bg-black text-white border border-white/20 rounded-md px-3 py-2 focus:outline-none focus:border-white/40" placeholder="Voice agent for…"></textarea>
+        <button class="btn mt-4 w-full">Send</button>
       </form>
     </div>
   </section>
 
-  <footer>
-    <div class="container" style="padding:26px 0; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:10px;">
-      <div class="muted">© <span id="y"></span> Straughn Solutions. All rights reserved.</div>
-      <div class="muted">AI • Web • Apps • Automations</div>
-    </div>
+  <footer class="border-t border-white/10 py-8 text-center text-gray-400 text-sm">
+    © 2025 Straughn Solutions. All rights reserved.
   </footer>
 
   <script>
-    // Year
-    document.getElementById('y').textContent = new Date().getFullYear();
-
-    // Mobile menu
-    const btn = document.getElementById('menuBtn');
-    const mobile = document.getElementById('mobile');
-    btn?.addEventListener('click', ()=> {
-      mobile.style.display = (mobile.style.display==='block') ? 'none' : 'block';
-    });
-
-    // Scrollspy (desktop)
-    const navLinks = [...document.querySelectorAll('.links a')];
-    const targets = navLinks.map(a => document.querySelector(a.getAttribute('href')));
-    const setActive = () => {
-      const y = scrollY + 120;
-      let i = 0;
-      targets.forEach((sec, idx) => { if (sec && sec.offsetTop <= y) i = idx; });
-      navLinks.forEach(a => a.classList.remove('active'));
-      navLinks[i]?.classList.add('active');
-    };
-    document.addEventListener('scroll', setActive, {passive:true}); setActive();
-
-    // Waveform animation keyframes (inline for isolation)
-    const style = document.createElement('style');
-    style.textContent = '@keyframes b{0%,100%{height:10px}50%{height:40px}}';
-    document.head.appendChild(style);
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries)=> {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('show'); });
+    }, { threshold: .12 });
+    document.querySelectorAll('.reveal').forEach(el => io.observe(el));
   </script>
 </body>
 </html>
